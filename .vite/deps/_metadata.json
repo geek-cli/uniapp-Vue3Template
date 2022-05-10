@@ -1,23 +1,23 @@
 {
-  "hash": "dff68766",
-  "browserHash": "9019cd08",
+  "hash": "da6a8ff8",
+  "browserHash": "f646d89b",
   "optimized": {
     "regenerator-runtime": {
       "src": "../../node_modules/regenerator-runtime/runtime.js",
       "file": "regenerator-runtime.js",
-      "fileHash": "299050b3",
+      "fileHash": "76ac1971",
       "needsInterop": true
     },
     "uni-crazy-router": {
       "src": "../../node_modules/uni-crazy-router/dist/index.js",
       "file": "uni-crazy-router.js",
-      "fileHash": "3491bb61",
+      "fileHash": "68cd5ff9",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-ZVDKJDOX": {
-      "file": "chunk-ZVDKJDOX.js"
+    "chunk-JEKNGR43": {
+      "file": "chunk-JEKNGR43.js"
     }
   }
 }

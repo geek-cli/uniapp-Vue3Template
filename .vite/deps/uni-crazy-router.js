@@ -2,12 +2,12 @@ import {
   __toESM,
   init_define_process_env_UNI_STAT_TITLE_JSON,
   require_runtime
-} from "./chunk-ZVDKJDOX.js";
+} from "./chunk-JEKNGR43.js";
 
 // dep:uni-crazy-router
 init_define_process_env_UNI_STAT_TITLE_JSON();
 
-// ../../../Documents/HBuilderProjects/vue3Demo/node_modules/uni-crazy-router/dist/index.js
+// ../../../Desktop/uniapp-Vue3Template/node_modules/uni-crazy-router/dist/index.js
 init_define_process_env_UNI_STAT_TITLE_JSON();
 var import_regenerator_runtime = __toESM(require_runtime());
 function t(t2, e2) {

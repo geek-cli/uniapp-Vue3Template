@@ -26,9 +26,9 @@ var init_define_process_env_UNI_STAT_TITLE_JSON = __esm({
   }
 });
 
-// ../../../Documents/HBuilderProjects/vue3Demo/node_modules/regenerator-runtime/runtime.js
+// ../../../Desktop/uniapp-Vue3Template/node_modules/regenerator-runtime/runtime.js
 var require_runtime = __commonJS({
-  "../../../Documents/HBuilderProjects/vue3Demo/node_modules/regenerator-runtime/runtime.js"(exports, module) {
+  "../../../Desktop/uniapp-Vue3Template/node_modules/regenerator-runtime/runtime.js"(exports, module) {
     init_define_process_env_UNI_STAT_TITLE_JSON();
     var runtime = function(exports2) {
       "use strict";
@@ -508,4 +508,4 @@ export {
   init_define_process_env_UNI_STAT_TITLE_JSON,
   require_runtime
 };
-//# sourceMappingURL=chunk-ZVDKJDOX.js.map
+//# sourceMappingURL=chunk-JEKNGR43.js.map

@@ -1,0 +1,26 @@
+{
+  "name": "uniapp-Vue3Template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "regenerator-runtime": "^0.13.9",
+    "uni-crazy-router": "^1.0.4",
+    "uni-vite-plugin-h5-prod-effect": "^1.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geek-cli/uniapp-Vue3Template.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/geek-cli/uniapp-Vue3Template/issues"
+  },
+  "homepage": "https://github.com/geek-cli/uniapp-Vue3Template#readme"
+}
