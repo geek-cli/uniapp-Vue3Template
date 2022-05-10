@@ -12,24 +12,6 @@
 				"navigationBarTitleText": ""
 			}
 		}
-	    ,{
-            "path" : "pages/center/center",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/login/login",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            },
-			"name": "login"
-        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
