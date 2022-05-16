@@ -2,3 +2,17 @@
 # yarn lockfile v1
 
 
+regenerator-runtime@^0.13.9:
+  version "0.13.9"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.9.tgz#8925742a98ffd90814988d7566ad30ca3b263b52"
+  integrity sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==
+
+uni-crazy-router@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/uni-crazy-router/-/uni-crazy-router-1.0.4.tgz#6e900abaa26711037a3133049e60277519d48baf"
+  integrity sha512-NpVgUjfgeDRj4lwseUCDEj53x2DoENhbpkHooHlcegOo04agfvTSQptZYPLgNY0hPwDLWyBky0tXuPexX2tqBg==
+
+uni-vite-plugin-h5-prod-effect@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/uni-vite-plugin-h5-prod-effect/-/uni-vite-plugin-h5-prod-effect-1.0.1.tgz#c89eb17c44bc0b4544b0c08ee06ddf523042c39d"
+  integrity sha512-Yqh77yolttd2QcJy4W5slMR98EXb4V7ql49uVrNr74NhyQwPQLl9lg+ML9DrFlg8ZL7zUYJmGoK5bBCY0bYtcg==

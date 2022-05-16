@@ -40,22 +40,22 @@
             "sdkConfigs" : {}
         }
     },
-	"h5" : {
-	    "devServer" : {
-			"port": 3000,
-	        "proxy" : {
-	            "/api" : {
-	                "target" : "",
-					"changeOrigin": true
-	            }
-	        },
-	        "https" : false,
-	        "disableHostCheck" : true
-	    },
-	    "router" : {
-	        "mode" : "history"
-	    }
-	},
+    "h5" : {
+        "devServer" : {
+            "port" : 3000,
+            "proxy" : {
+                "/api" : {
+                    "target" : "",
+                    "changeOrigin" : true
+                }
+            },
+            "https" : false,
+            "disableHostCheck" : true
+        },
+        "router" : {
+            "mode" : "history"
+        }
+    },
     "quickapp" : {},
     "mp-weixin" : {
         "appid" : "",
