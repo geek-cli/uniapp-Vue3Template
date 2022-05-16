@@ -1,6 +1,6 @@
 <template>
 	<view class="index">
-		新项目
+		<Header></Header>
 	</view>
 </template>
 

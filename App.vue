@@ -1,7 +1,8 @@
 <script>
 	import { getCurrentInstance } from "vue";
 	export default {
-		onLaunch: function() {
+		onLaunch: function(option) {
+			console.log(option);
 			console.log('App Launch')
 		},
 		onShow: function() {

@@ -11,17 +11,15 @@ export default {
 
 // 跳转前
 uniCrazyRouter.beforeEach(async (to, from ,next)=>{
-    // 逻辑代码
     next();
 })
 
 // 跳转后
 uniCrazyRouter.afterEach((to, from)=>{
-    // 逻辑代码
-	console.log(to);
+    
 })
 
 // 错误页面
 uniCrazyRouter.onError((to, from)=>{
-    // 逻辑代码
+    
 })
