@@ -1,5 +1,5 @@
-import api from "@/units/servers/api";
-import config from './servers/config'
+import api from "@/units/server/api.js";
+import config from '@/units/server/config.js';
 
 export default {
 	// 上传图片

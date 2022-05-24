@@ -1,5 +1,9 @@
+<template>
+	<view>
+		
+	</view>
+</template>
 <script>
-	import { getCurrentInstance } from "vue";
 	export default {
 		onLaunch: function(option) {
 			console.log(option);

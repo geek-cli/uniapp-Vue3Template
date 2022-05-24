@@ -76,9 +76,9 @@ const requestErr = (response) => {
 				icon: 'none'
 			});
 			uni.removeStorageSync('ticket')
-			uni.navigateTo({
-				url: '../pages/loginIn/loginIn',
-			});
+			router.push({
+				name: "login"
+			})
 			break
 		case 404:
 			uni.showToast({

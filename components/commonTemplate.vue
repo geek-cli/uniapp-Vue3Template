@@ -1,5 +1,5 @@
 <template>
-	<view class="index">
+	<view class="">
 		<Layout>
 			
 		</Layout>
@@ -16,17 +16,10 @@
 		},
 		methods: {
 			
-		},
-		onLoad() {
-			
 		}
 	}
 </script>
 
 <style lang="less" scoped>
-	.index {
-		.content {
-			height: 100vh;
-		}
-	}
+	
 </style>

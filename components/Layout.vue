@@ -1,8 +1,6 @@
 <template>
-	<view class="index">
-		<Layout>
-			
-		</Layout>
+	<view class="Layout">
+		<slot></slot>
 	</view>
 </template>
 
@@ -16,17 +14,12 @@
 		},
 		methods: {
 			
-		},
-		onLoad() {
-			
 		}
 	}
 </script>
 
 <style lang="less" scoped>
-	.index {
-		.content {
-			height: 100vh;
-		}
-	}
+	.Layout {
+		
+    }
 </style>
