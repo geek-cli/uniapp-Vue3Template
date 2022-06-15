@@ -7,7 +7,6 @@
 </template>
 
 <script>
-	import { ref, reactive } from "vue";
 	export default {
 		setup(props) {
 			return {
@@ -18,7 +17,9 @@
 			
 		},
 		onLoad() {
-			
+			this.$api.indexProjectList({}).then(res=>{
+				console.log(res)
+			})
 		}
 	}
 </script>

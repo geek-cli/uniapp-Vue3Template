@@ -1,6 +1,6 @@
 // 所有支付方法
 import api from "@/units/server/api.js";
-import play from "@/units/js/play.js";
+import pay from "@/units/js/pay.js";
 export default {
     /**
      * 这里写项目中的使用的支付方法 从上方中拿出自己项目所需支付即可
@@ -12,8 +12,8 @@ export default {
             // 将订单传递给后台
             api.hwcPay({order_id}, {
                 success: res=>{
-                    // 拿到支付信息并传递给play中微信的支付方法中
-                    play.wxAccountsPay(res.json, success, fail);
+                    // 拿到支付信息并传递给pay中微信的支付方法中
+                    pay.wxAccountsPay(res.json, success, fail);
                 }
             })
         }

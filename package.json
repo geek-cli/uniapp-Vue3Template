@@ -4,6 +4,7 @@
   "description": "",
   "main": "main.js",
   "dependencies": {
+    "jweixin-module": "^1.6.0",
     "regenerator-runtime": "^0.13.9",
     "uni-crazy-router": "^1.0.4",
     "uni-vite-plugin-h5-prod-effect": "^1.0.1"

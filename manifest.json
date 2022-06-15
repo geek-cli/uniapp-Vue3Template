@@ -45,7 +45,7 @@
             "port" : 3000,
             "proxy" : {
                 "/api" : {
-                    "target" : "",
+                    "target" : "http://sccd.pfc598.com",
                     "changeOrigin" : true
                 }
             },

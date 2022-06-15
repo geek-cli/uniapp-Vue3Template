@@ -4,7 +4,7 @@ import router from './router.js'; // 引入路由
 // 需要全局挂在方法
 import api from "@/units/server/api.js";
 import Common from "@/units/Common.js";
-import play from "@/units/js/itemPlay.js";
+import pay from "@/units/js/itemPay.js";
 
 // #ifndef VUE3
 	import Vue from 'vue'
@@ -27,7 +27,7 @@ import play from "@/units/js/itemPlay.js";
 		// 全局挂在方法
 		app.config.globalProperties.$api = api; // 请求
 		app.config.globalProperties.$Common = Common; // 常用方法
-		app.config.globalProperties.$play = play; // 支付方法
+		app.config.globalProperties.$pay = pay; // 支付方法
 		return {
 			app
 		}
