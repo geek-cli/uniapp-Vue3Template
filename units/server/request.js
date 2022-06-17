@@ -216,137 +216,143 @@ const requestErr = (response) => {
 	}
 }
 
-const requestMethod = async (url, params, auth, method, isLoading = true, hasFile = false) => {
-	let ticket = await getTicketRequest();
-	if (ticket === '') {
-		uni.showToast({
-			icon: 'none',
-			title: '获取凭证失败',
-			duration: 2000
-		});
-	} else if (ticket === 'next') {
-		return requestMethod(url, params, auth, method);
-	}
-	if (auth && !uni.getStorageSync('token')) {
-		router.push({
-			name: "login"
-		})
-		uni.hideLoading();
-		console.error('需要登录状态', url);
-		return
-	}
-	
-	let newUrl = url
-	if(uni.getStorageSync("shop_id") && !hasFile){
-		if(!params){
-			params = {}
-		}
-		if(!params.shop_id) {
-			params.shop_id =  uni.getStorageSync("shop_id");
-		}
-	}
-	if (method === 'get') {
-		if (params) {
-			Object.keys(params).forEach((key, index) => {
-				if (index === 0) {
-					newUrl = newUrl + '?' + key + '=' + params[key]
-				} else {
-					newUrl = newUrl + '&' + key + '=' + params[key]
-				}
-			})
-		}
-	}
-	
-	let fileHeaders = {}
-	if (hasFile) {
-		fileHeaders = {
-			'content-type': 'application/x-www-form-urlencoded'
-		}
-	}
-
-	if (isLoading) {
-		//增加请求中状态  
-		uni.showLoading({mask: true});
-	}
-	
-	var options = {
-		url: newUrl,
-		data: method !== 'get' ? params : null,
-		method: method,
-		timeout: 20000,
-		header: auth ? {
-			'X-ticket': ticket,
-			'Authorization': uni.getStorageSync('token'),
-			...fileHeaders,
-		} : {
-			'X-ticket': ticket,
-
-			...fileHeaders,
-		}
-	}
-			
-	let _config = null
-		
-	_config = Object.assign({}, options, options)
-	_config.requestId = new Date().getTime()
-		
-	if (interceptor.request) {
-		interceptor.request(_config)
-	}
-		
-	if (process.env.NODE_ENV === 'development') {
-		console.log("【" + _config.requestId + "】 地址：" + _config.url)
-		if (_config.data) {
-			console.log("【" + _config.requestId + "】 参数：" + JSON.stringify(_config.data))
-		}
-	}
-	
-	if (hasFile) {
-		delete _config.header['content-type']
-		_config.filePath = _config.data
-		_config.name = 'file'
-		uni.uploadFile(_config);
-	} else {
-		return uni.request(_config).then(res=>{
-			return if (res.statusCode === 200) {
-				if (url.indexOf('upload/image') === -1) {
-					res.data = JSON.stringify(res.data).replace(/\/storage\//g, config
-						.imgHost + '/storage/')
-					res.data = JSON.parse(res.data)
-				}
-				resolve(res.data);
-			} else {
-				reject(res.data);
-			}
-		}).catch(err=>{
-			console.log('失败了');
-			return err;
-		}).finally(()=>{
-			let statusCode = response.statusCode;
-			
-			response.config = _config;
-			
-			if (process.env.NODE_ENV === 'development') {
-				if (statusCode === 200) {
-					console.log("【" + _config.requestId + "】 结果：" + JSON.stringify(response.data))
-				}
-			}
-			
-			if (interceptor.response) {
-				
-				let newResponse = interceptor.response(response)
-				if (newResponse) {
-					response = newResponse
-				}
-			}
-			if(isLoading) {
+const requestMethod = (url, params, auth, method, isLoading = true, hasFile = false) => {
+	return new Promise(async (resolve, reject)=>{
+		let ticket = await getTicketRequest();
+		if (ticket === '') {
+			uni.showToast({
+				icon: 'none',
+				title: '获取凭证失败',
+				duration: 2000
+			});
+		} else if (ticket === 'next') {
+			return requestMethod(url, params, auth, method);
+		} else {
+			if (auth && !uni.getStorageSync('token')) {
+				router.push({
+					name: "login"
+				})
 				uni.hideLoading();
+				console.error('需要登录状态', url);
+				return
 			}
-			if (statusCode !== 200) { // 不成功
-				requestErr(response)
+	
+			let newUrl = url
+			if(uni.getStorageSync("shop_id") && !hasFile){
+				if(!params){
+					params = {}
+				}
+				if(!params.shop_id) {
+					params.shop_id =  uni.getStorageSync("shop_id");
+				}
 			}
-		});
-	}
+			if (method === 'get') {
+				if (params) {
+					Object.keys(params).forEach((key, index) => {
+						if (index === 0) {
+							newUrl = newUrl + '?' + key + '=' + params[key]
+						} else {
+							newUrl = newUrl + '&' + key + '=' + params[key]
+						}
+					})
+				}
+			}
+	
+			let fileHeaders = {}
+			if (hasFile) {
+				fileHeaders = {
+					'content-type': 'application/x-www-form-urlencoded'
+				}
+			}
+	
+			if (isLoading) {
+				//增加请求中状态  
+				uni.showLoading({mask: true});
+			}
+	
+			var options = {
+				url: newUrl,
+				data: method !== 'get' ? params : null,
+				method: method,
+				timeout: 20000,
+				header: auth ? {
+					'X-ticket': ticket,
+					'Authorization': uni.getStorageSync('token'),
+					...fileHeaders,
+				} : {
+					'X-ticket': ticket,
+	
+					...fileHeaders,
+				},
+				success: (res) => {
+					if (res.statusCode === 200) {
+						if (url.indexOf('upload/image') === -1) {
+							res.data = JSON.stringify(res.data).replace(/\/storage\//g, config
+								.imgHost + '/storage/')
+							res.data = JSON.parse(res.data)
+						}
+						resolve(res.data);
+					} else {
+						reject(res.data);
+					}
+				},
+				fail: (err) => {
+					console.log('失败了');
+					reject(err);
+				}
+			}
+			
+			let _config = null
+			options.complete = (response) => {
+				let statusCode = response.statusCode;
+				
+				response.config = _config;
+				
+				if (process.env.NODE_ENV === 'development') {
+					if (statusCode === 200) {
+						// console.log("【" + _config.requestId + "】 结果：" + JSON.stringify(response.data))
+					}
+				}
+				
+				if (interceptor.response) {
+					
+					let newResponse = interceptor.response(response)
+					if (newResponse) {
+						response = newResponse
+					}
+				}
+				if(isLoading) {
+					uni.hideLoading();
+				}
+				if (statusCode !== 200) { // 不成功
+					requestErr(response)
+				}
+			}
+				
+			_config = Object.assign({}, options, options)
+			_config.requestId = new Date().getTime()
+				
+			if (interceptor.request) {
+				interceptor.request(_config)
+			}
+				
+			if (process.env.NODE_ENV === 'development') {
+				console.log("【" + _config.requestId + "】 地址：" + _config.url)
+				if (_config.data) {
+					console.log("【" + _config.requestId + "】 参数：" + JSON.stringify(_config.data))
+				}
+			}
+			
+			if (hasFile) {
+				delete _config.header['content-type']
+				_config.filePath = _config.data
+				_config.name = 'file'
+				uni.uploadFile(_config);
+			} else {
+				uni.request(_config);
+			}
+		}	
+	})
 }
 
 export default {

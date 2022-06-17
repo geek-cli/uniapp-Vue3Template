@@ -17,9 +17,7 @@
 			
 		},
 		onLoad() {
-			this.$api.indexProjectList({}).then(res=>{
-				console.log(res)
-			})
+			
 		}
 	}
 </script>
