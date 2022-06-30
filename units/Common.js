@@ -3,28 +3,78 @@ import config from '@/units/server/config.js';
 
 export default {
 	// 上传图片
-	upChooseImage(callBack) {
+	upChooseImage(callBack, fileType = 'image', count = 1) {
+		if (!uni.getStorageSync('QNToken')) {
+			// 无七牛Token
+			api.qiniuToken('', {
+				success: (data) => {
+					uni.setStorageSync('QNToken', data.upToken);
+					this.upChooseImage(callBack, fileType, count)
+				}
+			})
+			return
+		}
+		// 指定可上传的类型
+		let upFileTypeObj = {
+			image: {
+				tip: '无指定类型',
+			},
+			avatar: {
+				tip: '头像'
+			},
+			idCard: {
+				tip: '身份证'
+			},
+			userNft: {
+				tip: '自定义NFT'
+			}
+		}
+	
+		// 未指定类型时的警告
+		if (!upFileTypeObj[fileType]) {
+			console.warn('警告：文件类型未定义，若无类型指定可忽略');
+			console.warn('警告：文件类型未定义，若无类型指定可忽略');
+			console.warn('警告：文件类型未定义，若无类型指定可忽略');
+			console.warn('警告：文件类型未定义，若无类型指定可忽略');
+			console.warn('警告：文件类型未定义，若无类型指定可忽略');
+		}
+		// 获取时间戳,对应的文件夹名称
+		var nowDate = new Date();
+		var nowDateText = nowDate.getFullYear().toString() + (nowDate.getMonth() + 1).toString() + nowDate.getDate()
+			.toString();
 		uni.chooseImage({
-			count: 1,
-			sourceType: ['album'],
+			count,
+			sourceType: ['album', 'camera'],
 			success(res) {
 				if (res.tempFilePaths.length > 0) {
-					let filePath = res.tempFilePaths[0];
-					//压缩图片
-					uni.compressImage({
-						src: filePath,
-						quality: 80,
-						success: res => {
-							console.log(res.tempFilePath)
-						}
-					})
-					//进行上传操作
-					api.uploadPic(filePath, "task", {
-						success: (data) => {
-							callBack && callBack(JSON.parse(data).data)
-						},
-					});
+					let imgList = [];
+					for (let index = 0; index < res.tempFilePaths.length; index++) {
+						// 截取文件名后缀
+						var suffix = res.tempFiles[index].name.split('.').pop().toLowerCase();
+						// 上传七牛
+						uni.uploadFile({
+							url: 'http://upload-z1.qiniup.com',
+							filePath: res.tempFilePaths[index],
+							formData: {
+								// 文件名
+								'key': fileType + '/' + nowDateText + '/' + new Date().getTime() + Math
+									.floor(Math.random() * 100 + 1) + '.' + suffix,
+								'token': uni.getStorageSync('QNToken')
+							},
+							success: (data) => {
+								data = JSON.parse(data.data)
+								// 拼接文件名
+								imgList.push('https://jushashucang.dns.sdyddm.cn/' + data.key)
+								if (imgList.length == res.tempFilePaths.length) {
+									callBack && callBack(imgList)
+								}
+							}
+						})
+					}
 				}
+			},
+			fail: err => {
+				console.log(err);
 			}
 		});
 	},

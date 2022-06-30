@@ -29,19 +29,26 @@
 			icon: "/static/tabbar/home.png",
 			iconAct: "/static/tabbar/homeAct.png",
 			to: '/pages/index/index',
-			id: "home"
+			id: "home",
+			isLogin: false
 		}
 	]);
 	// 切换导航栏
 	let selectTab = (e)=>{
 		let data = e.target.dataset;
 		if(data.id) {
+			// 跳转项
+			let item = tabbar.filter(tab=>tab.id == data.id)[0]; 
+			// 判断需要登陆的地方是否登录
+			if(item.isLogin && (!uni.getStorageSync('user') || !uni.getStorageSync('token'))) {
+				return uni.navigateTo({
+					url: '' // 这里填写登录页地址
+				});
+			}
 			if(props.id === data.id) return;
-			// 找出要跳转的向
-			let to = tabbar.filter(tab=>tab.id == data.id)[0].to; 
 			// 跳转
 			uni.reLaunch({
-				url: to
+				url: item.to
 			});
 		}
 	}

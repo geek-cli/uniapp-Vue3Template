@@ -24,10 +24,12 @@ import pay from "@/units/js/itemPay.js";
 		const app = createSSRApp(App);
 		// 挂载路由
 		router.setupRouter(app); 
-		// 全局挂在方法
-		app.config.globalProperties.$api = api; // 请求
-		app.config.globalProperties.$Common = Common; // 常用方法
-		app.config.globalProperties.$pay = pay; // 支付方法
+		// 配置全局变量 页面中使用 inject 接收
+		app.provide('global', {
+			$api: api,
+			$Common: Common,
+			$pay: pay
+		})
 		return {
 			app
 		}

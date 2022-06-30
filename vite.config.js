@@ -5,6 +5,10 @@ import h5ProdEffectPlugin from 'uni-vite-plugin-h5-prod-effect'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+	// 开启源码调试
+	build: {
+	    sourcemap: true,
+	},
 	// 挂载全局css
 	css: {
 	    preprocessorOptions: {
