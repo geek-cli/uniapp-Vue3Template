@@ -2,6 +2,10 @@ import api from "@/units/server/api.js";
 import config from '@/units/server/config.js';
 
 export default {
+	// 动态加载图片
+	img(path) {
+		return `/static/img/${path}`
+	},
 	// 上传图片
 	upChooseImage(callBack, fileType = 'image', count = 1) {
 		if (!uni.getStorageSync('QNToken')) {
