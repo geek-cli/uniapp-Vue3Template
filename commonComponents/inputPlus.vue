@@ -3,10 +3,8 @@
 		<view class="title" v-if="title && titleShowType == 'block'">
 			{{title}}
 		</view>
-		<view class="container" 
-		:style="{
+		<view class="container" :style="{
 			height, 
-			paddingLeft: !title ? '16rpx' : '', 
 			backgroundColor, 
 			paddingRight: '20%' 
 		}">
@@ -15,33 +13,36 @@
 			</view>
 			<input :type="useInputType" :placeholder="inputPlaceholder" placeholder-class="input"
 				:placeholder-style="placeholderStyle" :maxlength="length" :disabled="disable" :value="modelValue"
-				@input="e=>$emit('input', e.detail.value)" />
+				@input="e=>emit('update:modelValue', e.detail.value)" />
 			<!-- 验证码 -->
 			<view class="code" v-if="type == 'code'" @click="sendCode">
 				<view class="text" v-if="!isSendCode">
 					{{codeText}}
 				</view>
-				<view class="timer" v-else>{{countdownTimer}}</view>
+				<view class="timer" v-else>重新发送({{countdownTimer}})</view>
 			</view>
 			<!-- 密码框 -->
 			<image @click="useInputType = useInputType == 'password' ? inputType : 'password'"
 				v-if="type === 'password'" class="eye"
-				:src="useInputType === 'password' ? '../../static/closeEye.png' : '../../static/openEye.png'" mode="">
+				:src="useInputType === 'password' ? '/static/closeEye.png' : '/static/openEye.png'" mode="">
 			</image>
+			<!-- 自定义右边内容 -->
+			<view class="rightDiy">
+				<slot name="right"></slot>
+			</view>
 		</view>
 	</view>
 </template>
 
 <script setup>
-	import { ref, reactive, inject, watch } from "vue";
+	import { ref, reactive, inject, toRefs, watch } from "vue";
 	import { onLoad } from '@dcloudio/uni-app';
 	// 获取全局对象
 	const global = inject('global');
-	// 常用方法
-	const $Common = global.$Common;
-	// api
-	const $api = global.$api;
+	// 解构需要使用的部分
+	const { $Common, $api } = global;
 	
+	// 组件参数
 	let props = defineProps({
 		// 标题
 		title: {
@@ -81,7 +82,7 @@
 			default: 60
 		},
 		height: {
-			default: "60rpx"
+			default: "94rpx"
 		},
 		backgroundColor: {
 			default: "rgba(0, 0, 0, 0)"
@@ -109,99 +110,108 @@
 		// 不可发送验证码的提示语
 		noCanSendCodeText: {
 			default: "请输入正确的手机号"
+		},
+		// 是否开启倒计时
+		isOpenTheCountdown: {
+			default: false
 		}
 	})
 	
-	let emit = defineEmits(['code', "update:modelValue"])
+	// 组件自定义事件
+	let emit = defineEmits(["code", "update:modelValue"])
 	
 	// 使用的input类型
-	let useInputType = ref(props.type === 'password' ? 'password' : props.inputType);
-	
+	let useInputType = ref(props.type == 'password' ? 'password' : props.inputType);
 	// 是否已经发送验证码
 	let isSendCode = ref(false);
-	// 倒计时长
+	// 倒计时时长
 	let countdownTimer = ref(props.timer);
+	
 	// 发送验证码
 	let sendCode = ()=>{
-		if(props.isCanSendCode) {
-			if(!isSendCode.value) {
-				// 修改验证码状态
-				isSendCode.value = true;
+		if (props.isCanSendCode) {
+			if (!isSendCode.value) {
 				// 执行发送code时间
 				emit('code');
-				// 增加倒计时
-				let time = setInterval(()=>{
-					// 判断是否倒计时结束
-					if(countdownTimer.value <= 1) {
-						// 重置时间
-						countdownTimer.value = props.timer;
-						isSendCode.value = false;
-						clearInterval(time);
-					} else {
-						countdownTimer.value--;
-					}
-				}, 1000)
 			}
 		} else {
 			$Common.commonToast(props.noCanSendCodeText)
 		}
 	}
+	
+	// 监听是否开启倒计时
+	watch(()=> props.isOpenTheCountdown, (newValue)=>{
+		// 如果为开启倒计时
+		if (newValue && !isSendCode.value) {
+			// 修改验证码状态
+			isSendCode.value = true;
+			// 增加倒计时
+			let time = setInterval(() => {
+				// 判断是否倒计时结束
+				if (countdownTimer.value <= 1) {
+					// 重置时间
+					countdownTimer.value = props.timer;
+					isSendCode.value = false;
+					clearInterval(time);
+				} else {
+					countdownTimer.value--;
+				}
+			}, 1000)
+		}
+	})
 </script>
 
 <style lang="less" scoped>
 	.inputPlus {
-		padding-bottom: 10rpx;
 		&.border {
-			border-bottom: 1rpx solid #333;
+			border-bottom: 1rpx solid #EEEEEE;
 		}
+
 		.title {
-			font-size: 28rpx;
-			font-weight: 500;
 			color: #333333;
-			line-height: 1;
 		}
+
 		.container {
 			display: flex;
 			align-items: center;
-			position: relative;		
+			position: relative;
+
 			.title {
-				margin-right: 46rpx;
+				margin-right: 30rpx;
 				min-width: 20%;
 			}
-			
+
 			input {
-				font-size: 24rpx;
+				font-size: 26rpx;
 				font-weight: 500;
 				flex: 1;
 				margin-right: 40rpx;
 			}
-			
+
 			.input {
 				color: #999999;
 			}
-			
+
 			.eye {
 				width: 32rpx;
 				height: 32rpx;
-				right: 47rpx;
+				right: 0;
 			}
-			
+
 			.code {
 				right: 0;
-				color: #F03000;
-			
-				.text {
-					padding: 12rpx 15rpx;
-					font-size: 18rpx;
-					font-weight: 500;
-					border: 4rpx solid #F03000;
-					border-radius: 50rpx;
-					line-height: 1;
-				}
+				font-size: 26rpx;
+				font-weight: bold;
+				color: #1395F3;
 			}
-			
+
+			.rightDiy {
+				right: 0;
+			}
+
 			.code,
-			.eye {
+			.eye,
+			.rightDiy {
 				position: absolute;
 			}
 		}

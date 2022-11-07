@@ -2,6 +2,6 @@
   "version": 3,
   "sources": ["dep:regenerator-runtime"],
   "sourcesContent": ["export default require(\"./node_modules/regenerator-runtime/runtime.js\");"],
-  "mappings": ";;;;;;AAAA;AAAA,IAAO,8BAAQ;",
+  "mappings": ";;;;;;;;AAAA;AAAA,IAAO,8BAAQ;",
   "names": []
 }

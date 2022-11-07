@@ -1,13 +1,15 @@
 import {
-  __toESM,
-  init_define_process_env_UNI_STAT_TITLE_JSON,
   require_runtime
-} from "./chunk-JEKNGR43.js";
+} from "./chunk-HDNUKMQR.js";
+import {
+  __toESM,
+  init_define_process_env_UNI_STAT_TITLE_JSON
+} from "./chunk-H3GGUTKQ.js";
 
 // dep:uni-crazy-router
 init_define_process_env_UNI_STAT_TITLE_JSON();
 
-// ../../../Desktop/uniapp-Vue3Template/node_modules/uni-crazy-router/dist/index.js
+// ../../../Desktop/开发常用工具/uniapp-Scaffolding/uniapp-Vue3Template/node_modules/uni-crazy-router/dist/index.js
 init_define_process_env_UNI_STAT_TITLE_JSON();
 var import_regenerator_runtime = __toESM(require_runtime());
 function t(t2, e2) {

@@ -1,31 +1,18 @@
 <template>
-	<view class="index">
-		<Layout>
-			
-		</Layout>
+	<view class="">
+		<znx-layout></znx-layout>
 	</view>
 </template>
 
-<script>
-	export default {
-		setup(props) {
-			return {
-				
-			}
-		},
-		methods: {
-			
-		},
-		onLoad() {
-			
-		}
-	}
+<script setup>
+	import { ref, reactive, inject, toRefs, watch } from "vue";
+	import { onLoad } from '@dcloudio/uni-app';
+	// 获取全局对象
+	const global = inject('global');
+	// 解构需要使用的部分
+	const { $Common, $api } = global;
 </script>
 
 <style lang="less" scoped>
-	.index {
-		.content {
-			height: 100vh;
-		}
-	}
+	
 </style>

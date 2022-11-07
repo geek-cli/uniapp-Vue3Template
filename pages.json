@@ -2,7 +2,7 @@
 	"easycom": {
 	  "autoscan": true,
 	  "custom": {
-	    "^(.*)": "@/components/$1.vue"
+	    "znx-(.*)": "@/commonComponents/$1.vue" // 匹配commonComponents目录内的vue文件
 	  }
 	},
 	"pages": [ 

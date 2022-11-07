@@ -1,23 +1,38 @@
 {
-  "hash": "da6a8ff8",
-  "browserHash": "f646d89b",
+  "hash": "4391344a",
+  "browserHash": "4e69053e",
   "optimized": {
+    "jweixin-module": {
+      "src": "../../node_modules/jweixin-module/lib/index.js",
+      "file": "jweixin-module.js",
+      "fileHash": "acc272dd",
+      "needsInterop": true
+    },
+    "pinia-persistedstate-plugin": {
+      "src": "../../node_modules/pinia-persistedstate-plugin/dist/pinia-persistedstate-plugin.es.js",
+      "file": "pinia-persistedstate-plugin.js",
+      "fileHash": "669b9180",
+      "needsInterop": false
+    },
     "regenerator-runtime": {
       "src": "../../node_modules/regenerator-runtime/runtime.js",
       "file": "regenerator-runtime.js",
-      "fileHash": "76ac1971",
+      "fileHash": "7062742c",
       "needsInterop": true
     },
     "uni-crazy-router": {
       "src": "../../node_modules/uni-crazy-router/dist/index.js",
       "file": "uni-crazy-router.js",
-      "fileHash": "68cd5ff9",
+      "fileHash": "c5a3c0f8",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-JEKNGR43": {
-      "file": "chunk-JEKNGR43.js"
+    "chunk-HDNUKMQR": {
+      "file": "chunk-HDNUKMQR.js"
+    },
+    "chunk-H3GGUTKQ": {
+      "file": "chunk-H3GGUTKQ.js"
     }
   }
 }

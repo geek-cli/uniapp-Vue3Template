@@ -6,8 +6,8 @@
 			<view class="header-main-box">
 				<view v-if="!noLeft" @click="headerLeftClick" class="header-left-box header-operation">
 					<image v-if="whiteback" class="header-left-back" mode="widthFix"
-						src="../static/icon-back-white.png" />
-					<image v-else class="header-left-back" mode="widthFix" src="../static/blackLeft.png" />
+						src="../static/header/icon-back-white.png" />
+					<image v-else class="header-left-back" mode="widthFix" src="../static/header/blackLeft.png" />
 				</view>
 				<view class="header-title" :style="{color: titlecolor ? titlecolor :' #333333'}">{{ pageTitle }}</view>
 				<view @click="headerRightClick" :style="{paddingRight: rightPadding ? rightPadding : '',color: rightColor ? rightColor + '!important' : ''}" class="header-right-box header-operation">
