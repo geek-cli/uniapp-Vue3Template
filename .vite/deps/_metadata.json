@@ -1,29 +1,29 @@
 {
-  "hash": "4391344a",
-  "browserHash": "4e69053e",
+  "hash": "7ee73cac",
+  "browserHash": "580400a4",
   "optimized": {
     "jweixin-module": {
       "src": "../../node_modules/jweixin-module/lib/index.js",
       "file": "jweixin-module.js",
-      "fileHash": "acc272dd",
+      "fileHash": "eec51245",
       "needsInterop": true
     },
     "pinia-persistedstate-plugin": {
       "src": "../../node_modules/pinia-persistedstate-plugin/dist/pinia-persistedstate-plugin.es.js",
       "file": "pinia-persistedstate-plugin.js",
-      "fileHash": "669b9180",
+      "fileHash": "861e0db1",
       "needsInterop": false
     },
     "regenerator-runtime": {
       "src": "../../node_modules/regenerator-runtime/runtime.js",
       "file": "regenerator-runtime.js",
-      "fileHash": "7062742c",
+      "fileHash": "f2f70301",
       "needsInterop": true
     },
     "uni-crazy-router": {
       "src": "../../node_modules/uni-crazy-router/dist/index.js",
       "file": "uni-crazy-router.js",
-      "fileHash": "c5a3c0f8",
+      "fileHash": "28d64902",
       "needsInterop": false
     }
   },

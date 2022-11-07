@@ -1,0 +1,25 @@
+{
+  "name": "",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geek-cli/uniapp-Vue3Template.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/geek-cli/uniapp-Vue3Template/issues"
+  },
+  "homepage": "https://github.com/geek-cli/uniapp-Vue3Template#readme",
+  "dependencies": {
+    "jweixin-module": "^1.6.0",
+    "pinia-persistedstate-plugin": "^0.1.0",
+    "uni-crazy-router": "^1.1.2",
+    "uni-vite-plugin-h5-prod-effect": "^1.0.1"
+  }
+}

@@ -1,8 +1,5 @@
-import { async } from 'regenerator-runtime';
 import config from './config';
 import router from "@/router.js";
-
-
 
 let requestTicket = false;
 let requestTicketTimeout = null;
