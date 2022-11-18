@@ -1,7 +1,7 @@
 <template>
 	<view class="">
 		<znx-layout>
-			<znx-numBox :maxValue="12" width="500rpx"></znx-numBox>
+			
 		</znx-layout>
 	</view>
 </template>
