@@ -6,13 +6,14 @@
 			<view class="header-main-box">
 				<view v-if="!noLeft" @click="headerLeftClick" class="header-left-box header-operation">
 					<image v-if="whiteback" class="header-left-back" mode="widthFix"
-						src="@/static/header/icon-back-white.png" />
-					<image v-else class="header-left-back" mode="widthFix" src="@/static/header/blackLeft.png" />
+						src="@/static/img/header/icon-back-white.png" />
+					<image v-else class="header-left-back" mode="widthFix" src="@/static/img/header/blackLeft.png" />
 				</view>
 				<view class="header-title" :style="{color: titlecolor ? titlecolor :' #333333'}">{{ pageTitle }}</view>
 				<view @click="headerRightClick" :style="{paddingRight: rightPadding ? rightPadding : '',color: rightColor ? rightColor + '!important' : ''}" class="header-right-box header-operation">
-					{{ rightText }}
-					<slot name="right"></slot>
+					<slot name="right">
+						{{ rightText }}
+					</slot>
 				</view>
 			</view>
 		</view>
@@ -42,6 +43,7 @@
 		// 是否没有返回
 		noLeft: {
 			default: false,
+			type: Boolean
 		},
 		notitle: {
 			default: false,
@@ -54,9 +56,10 @@
 		rightColor:{
 			default: false
 		},
-		// 是否有左侧返回事件
+		// 是否有左侧自定义返回事件
 		leftClick: {
-			default: false
+			default: false,
+			type: Boolean
 		}
 	})
 	
@@ -71,9 +74,10 @@
 		if (props.notitle) {
 			pageTitle.value = props.notitle;
 		} else {
-			let url = getCurrentPages()[0].route; // 获取当前页面路径
+			let routes = getCurrentPages(); // 获取当前打开过的页面路由数组
+			let url = routes[routes.length - 1].route // 获取当前页面路由，也就是最后一个打开的页面路由
 			let page = pages.pages.filter(page=> page.path == url)[0]; // 通过过滤找出当前页面
-			let title = page.style.title; // 获取当前页面标题
+			let title = page.title; // 获取当前页面标题
 			pageTitle.value = title; // 赋值标题
 		}
 	})

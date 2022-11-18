@@ -2,26 +2,26 @@
 	<view class="btn" :style="{
 		width,
 		height,
-		borderRadius: isRadius ? '20rpx' : ''
+		borderRadius: isRadius ? '43rpx' : ''
 	}" @click="trigger" :class="type">
-		{{text}}
+		<slot>
+			按钮
+		</slot>
 	</view>
 </template>
 
 <script setup>
 	import { ref, reactive } from "vue";
 	let props = defineProps({
-		text: {
-			default: ""
-		},
 		height: {
-			default: "80rpx"
+			default: "86rpx"
 		},
 		width: {
-			default: "284rpx"
+			default: "100%"
 		},
 		isRadius: {
-			default: false
+			default: true,
+			type: Boolean
 		},
 		// 可选值为common1、common2
 		type: {
@@ -84,12 +84,12 @@
 		justify-content: center;
 		align-items: center;
 		&.common1 {
-			background: #FFC587;
-			color: #B30406;
+			background: #54A4FF;
+			color: #FFFFFF;
 		}
 		&.common2 {
-			color: #666666;
-			background: #fff;
+			color: #999999;
+			background: #EEEEEE;
 		}
 	}
 </style>

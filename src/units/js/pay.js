@@ -154,12 +154,11 @@ export default {
 		请在回到浏览器时进行判断本次交易的结果。
 	**/
 	h5Alpay(orderInfo) {
-		var resData = JSON.parse(orderInfo);//转换一下格式
-		// 创建一个div并执行表单的submit事件后就会唤起支付宝
-		const div = document.createElement('div');
-		div.id = 'alipay';
-		div.innerHTML = resData.data;
-		document.body.appendChild(div);
-		document.querySelector('#alipay').children[0].submit();
+		// #ifdef H5
+		window.location.href = orderInfo.url;
+		// #endif
+		// #ifdef APP-PLUS
+		plus.runtime.openURL(orderInfo.url);
+		// #endif
 	}
 };

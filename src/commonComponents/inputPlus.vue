@@ -24,7 +24,7 @@
 			<!-- 密码框 -->
 			<image @click="useInputType = useInputType == 'password' ? inputType : 'password'"
 				v-if="type === 'password'" class="eye"
-				:src="useInputType === 'password' ? '/static/closeEye.png' : '/static/openEye.png'" mode="">
+				:src="useInputType === 'password' ? $Common.img('/input/closeEye.png') : $Common.img('/input/openEye.png')" mode="">
 			</image>
 			<!-- 自定义右边内容 -->
 			<view class="rightDiy">
@@ -67,7 +67,8 @@
 		},
 		// 是否有边框线
 		isBorder: {
-			default: true
+			default: true,
+			type: Boolean
 		},
 		// 占位符样式
 		placeholderStyle: {
@@ -88,8 +89,9 @@
 			default: "rgba(0, 0, 0, 0)"
 		},
 		// 是否禁用
-		disable: {
-			default: false
+		disabled: {
+			default: false,
+			type: Boolean
 		},
 		// 输入框占位符
 		inputPlaceholder: {
@@ -105,7 +107,8 @@
 		},
 		// 是否可以发送验证码
 		isCanSendCode: {
-			default: false
+			default: false,
+			type: Boolean
 		},
 		// 不可发送验证码的提示语
 		noCanSendCodeText: {
@@ -113,7 +116,8 @@
 		},
 		// 是否开启倒计时
 		isOpenTheCountdown: {
-			default: false
+			default: false,
+			type: Boolean
 		}
 	})
 	
