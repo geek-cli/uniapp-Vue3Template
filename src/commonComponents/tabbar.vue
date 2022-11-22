@@ -1,13 +1,14 @@
 <template>
-	<view class="tabbar" @click="selectTab">
+	<view class="tabbar">
 		<view class="content">
-			<view class="tabbar-item" v-for="(item, index) in tabbar" :key="index" :style="{width: `${750/tabbar.length}rpx`}">
+			<view class="tabbar-item" v-for="(item, index) in tabbar" :key="index"
+				:style="{width: `${750/tabbar.length}rpx`}" @click="selectTab(item.id)">
 				<view>
 					<view class="img relative">
-						<image v-if="id === index " :src="item.iconAct" mode="aspectFit" :data-id="item.id"></image>
-						<image v-else :src="item.icon" mode="aspectFit" :data-id="item.id"></image>
+						<image v-if="ident === item.id" :src="$Common.img(item.iconAct)" mode="aspectFit"></image>
+						<image v-else :src="$Common.img(item.icon)" mode="aspectFit"></image>
 					</view>
-					<view :data-id="item.id" :class="id === item.id ? 'act' : ''">{{item.text}}</view>
+					<view :class="ident === item.id ? 'act' : ''">{{item.text}}</view>
 				</view>
 			</view>
 		</view>
@@ -15,42 +16,56 @@
 </template>
 
 <script setup>
-	import { ref, reactive } from "vue";
+	import {
+		ref,
+		reactive,
+		inject,
+		toRefs,
+		watch
+	} from "vue";
+	import {
+		onLoad,
+		onReady
+	} from '@dcloudio/uni-app';
+	// 获取全局对象
+	const global = inject('global');
+	// 解构需要使用的部分
+	const {
+		$Common,
+		$api
+	} = global;
 	// 组件参数
 	let props = defineProps({
-		id: {
+		ident: {
 			default: ""
 		}
 	})
 	// 变量
 	let tabbar = reactive([
-		{
-			text: '首页',
-			icon: "/static/tabbar/home.png",
-			iconAct: "/static/tabbar/homeAct.png",
-			to: '/pages/index/index',
-			id: "home",
-			isLogin: false
-		}
+		// {
+		// 	text: '首页',
+		// 	icon: "tabbar/icon1.png",
+		// 	iconAct: "tabbar/icon1Act.png",
+		// 	to: '/pages/index/index',
+		// 	id: "home",
+		// 	isLogin: false
+		// },
 	]);
 	// 切换导航栏
-	let selectTab = (e)=>{
-		let data = e.target.dataset;
-		if(data.id) {
-			// 跳转项
-			let item = tabbar.filter(tab=>tab.id == data.id)[0]; 
-			// 判断需要登陆的地方是否登录
-			if(item.isLogin && (!uni.getStorageSync('user') || !uni.getStorageSync('token'))) {
-				return uni.navigateTo({
-					url: '' // 这里填写登录页地址
-				});
-			}
-			if(props.id === data.id) return;
-			// 跳转
-			uni.reLaunch({
-				url: item.to
+	let selectTab = (id) => {
+		// 跳转项
+		let item = tabbar.filter(tab => tab.id == id)[0];
+		// 判断需要登陆的地方是否登录
+		if (item.isLogin && (!uni.getStorageSync('user') || !uni.getStorageSync('token'))) {
+			return uni.navigateTo({
+				url: '' // 这里填写登录页地址
 			});
 		}
+		if (props.ident === id) return;
+		// 	// 跳转
+		uni.reLaunch({
+			url: item.to
+		});
 	}
 </script>
 
@@ -62,6 +77,7 @@
 		padding-top: calc(98rpx + 20rpx);
 		padding-top: calc(98rpx + constant(safe-area-inset-bottom) + 20rpx);
 		padding-top: calc(98rpx + env(safe-area-inset-bottom) + 20rpx);
+
 		.redDot {
 			right: -10rpx;
 			border-radius: 50%;
@@ -79,6 +95,7 @@
 			justify-content: center;
 			align-items: center;
 		}
+
 		.content {
 			width: 100%;
 			position: fixed;
@@ -87,32 +104,37 @@
 			left: 0;
 			justify-content: center;
 			background-color: #fff;
-			box-shadow: 0px -2px 12px 0px rgba(0, 0, 0, 0.08);
+			box-shadow: 0 -2rpx 12rpx 0 rgba(0, 0, 0, 0.08);
 		}
+
 		.tabbar-item {
 			display: flex;
 			justify-content: center;
+
 			&:nth-child(4) {
-				> view {
+				>view {
 					image {
 						position: relative;
 						left: -6rpx;
 					}
 				}
 			}
+
 			>view {
 				image {
 					width: 52rpx;
 					height: 52rpx;
 				}
+
 				color: rgba(153, 153, 153, 1);
 				font-size: 24rpx;
 				padding: 15rpx 0;
 				text-align: center;
 				font-weight: 500;
 			}
+
 			.act {
-				color: rgba(51, 51, 51, 1);
+				color: #35CB60;
 			}
 		}
 	}
