@@ -7,6 +7,19 @@
 </template>
 
 <script setup>
+	/**
+	 * numBox 步进器
+	 * @description 步进器，一般用于选择商品数量的场景。
+	 * @property {String} width 宽度
+	 * @property {String} height 高度
+	 * @property {Nunber} maxValue 最大值(默认值: -1), -1则为无限大
+	 * @property {Nunber} 最小值 最小值(默认值: 1)
+	 * @property {Nunber} modelValue 值
+	 * @property {Boolean} integer 是否只可输入整数(默认值: false)
+	 * @property {Number} step 每次步进的范围(默认值: 1)
+	 * @property {Number} decimalLength 显示的小数位数(默认值: -1)，-1代表不限制小数位数
+	 * @example <waterfall :value="flowList"></waterfall>
+	 */
 	import {
 		ref,
 		reactive,

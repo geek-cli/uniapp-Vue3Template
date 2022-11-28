@@ -28,6 +28,11 @@
 </template>
 
 <script setup>
+	/**
+	 * VersionUpdate 版本更新
+	 * @description 用于APP版本更新。
+	 * @example <waterfall :value="flowList"></waterfall>
+	 */
 	import { ref, onMounted, getCurrentInstance } from "vue";
 	import { getCurrentInstance } from "vue";
 	let $api = getCurrentInstance().appContext.config.globalProperties.$api;

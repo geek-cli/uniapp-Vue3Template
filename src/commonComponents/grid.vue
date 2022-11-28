@@ -8,6 +8,13 @@
 </template>
 
 <script setup>
+	/**
+	 * grid grid布局
+	 * @description grid布局，用来快速构建grid布局。
+	 * @property {Number} num 一行显示几个(默认3个)
+	 * @property {String} gap 每个项目之间的距离(默认30rpx)
+	 * @example <grid></grid>
+	 */
     // vue
     import { ref, reactive, inject, toRefs } from "vue";
     // 路由

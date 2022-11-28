@@ -21,6 +21,20 @@
 </template>
 
 <script setup>
+	/**
+	 * header 页面标题
+	 * @description 自定义页面标题
+	 * @property {String} rightText 右侧文字
+	 * @property {Boolean String} noBg 是否有背景色
+	 * @property {Boolean String} titlecolor 是否有标题颜色
+	 * @property {Boolean} whiteback 是否有白色左侧箭头
+	 * @property {Boolean} noLeft 是否没有返回
+	 * @property {String} notitle 页面标题
+	 * @property {String} rightPadding 右侧padding
+	 * @property {String} rightColor 右侧字体颜色
+	 * @property {Boolean} leftClick 是否有左侧自定义返回事件
+	 * @example <header notitle="页面标题"></header>
+	 */
 	import pages from "@/pages.json";
 	import { toRefs, ref, onMounted } from "vue";
 	let props = defineProps({

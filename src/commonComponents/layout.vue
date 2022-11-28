@@ -5,6 +5,11 @@
 </template>
 
 <script setup>
+	/**
+	 * Layout
+	 * @description 这是一个容器，用来存放页面内所有视图层的内容，可以方便后期拓展时添加全局内容。
+	 * @example <Layout :value="flowList"></Layout>
+	 */
 	import { ref, reactive, inject, toRefs } from "vue";
 	import { onLoad } from '@dcloudio/uni-app';
 	// 获取全局对象

@@ -78,6 +78,11 @@
 </template>
 
 <script setup>
+	/**
+	 * payment-password 密码框
+	 * @description 密码框，常用于数字密码支付场景。
+	 * @example <payment-password :value="flowList"></payment-password>
+	 */
 	import { ref, reactive, getCurrentInstance, computed, watch } from "vue";
 	
 	// props 
