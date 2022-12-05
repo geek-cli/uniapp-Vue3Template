@@ -16,8 +16,5 @@
 </script>
 
 <style lang="less" scoped>
-	page {
-		margin-top: 100rpx;
-		margin-left: 100rpx;
-	}
+	
 </style>

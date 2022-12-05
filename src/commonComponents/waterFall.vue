@@ -1,7 +1,7 @@
 <template>
 	<view class="waterfall">
-		<view id="left-column" class="u-column"><slot name="left" :leftList="leftList"></slot></view>
-		<view id="right-column" class="u-column"><slot name="right" :rightList="rightList"></slot></view>
+		<view id="left-column" class="column"><slot name="left" :leftList="leftList"></slot></view>
+		<view id="right-column" class="column"><slot name="right" :rightList="rightList"></slot></view>
 	</view>
 </template>
 

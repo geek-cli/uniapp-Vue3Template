@@ -6,6 +6,15 @@ export default {
 	img(path) {
 		return `/static/img/${path}`
 	},
+	// 返回上一层页面
+	back() {
+		// #ifndef H5
+		uni.navigateBack();
+		// #endif
+		// #ifdef H5
+		history.back();
+		// #endif
+	},
 	// 上传图片
 	upChooseImage(callBack, fileType = 'image', count = 1) {
 		if (!uni.getStorageSync('QNToken')) {

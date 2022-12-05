@@ -5,9 +5,11 @@
             }">
 			<view class="header-main-box">
 				<view v-if="!noLeft" @click="headerLeftClick" class="header-left-box header-operation">
-					<image v-if="whiteback" class="header-left-back" mode="widthFix"
+					<slot name="left">
+						<image v-if="whiteback" class="header-left-back" mode="widthFix"
 						src="@/static/img/header/icon-back-white.png" />
-					<image v-else class="header-left-back" mode="widthFix" src="@/static/img/header/blackLeft.png" />
+						<image v-else class="header-left-back" mode="widthFix" src="@/static/img/header/blackLeft.png" />
+					</slot>
 				</view>
 				<view class="header-title" :style="{color: titlecolor ? titlecolor :' #333333'}">{{ pageTitle }}</view>
 				<view @click="headerRightClick" :style="{paddingRight: rightPadding ? rightPadding : '',color: rightColor ? rightColor + '!important' : ''}" class="header-right-box header-operation">
@@ -24,19 +26,19 @@
 	/**
 	 * header 页面标题
 	 * @description 自定义页面标题
-	 * @property {String} rightText 右侧文字
-	 * @property {Boolean String} noBg 是否有背景色
-	 * @property {Boolean String} titlecolor 是否有标题颜色
-	 * @property {Boolean} whiteback 是否有白色左侧箭头
-	 * @property {Boolean} noLeft 是否没有返回
-	 * @property {String} notitle 页面标题
-	 * @property {String} rightPadding 右侧padding
-	 * @property {String} rightColor 右侧字体颜色
-	 * @property {Boolean} leftClick 是否有左侧自定义返回事件
+	 * @property {String} rightText 右侧文字(默认值："")，如果需要自定义右侧内容则可以使用名为right的具名插槽。
+	 * @property {Boolean String} noBg 是否有背景色(默认值：false)。
+	 * @property {Boolean String} titlecolor 是否有标题颜色(默认值：false)
+	 * @property {Boolean} whiteback 是否有白色左侧箭头(默认值: false)即默认黑色左侧箭头。
+	 * @property {Boolean} noLeft 是否没有返回(默认值: false),如果为true则不会出现返回箭头。
+	 * @property {String} notitle 页面标题(默认值:"")，如果不设置页面标题则会默认读取pages.json中相应页面的title属性。
+	 * @property {String} rightPadding 右侧padding(默认值: "30rpx")。
+	 * @property {String Boolean} rightColor 右侧字体颜色(默认值: false)。
+	 * @property {Boolean} leftClick 是否有左侧自定义返回事件(默认值: false)
 	 * @example <header notitle="页面标题"></header>
 	 */
 	import pages from "@/pages.json";
-	import { toRefs, ref, onMounted } from "vue";
+	import { toRefs, ref, onMounted, watch } from "vue";
 	let props = defineProps({
 		// 右侧文字
 		rightText: {
@@ -77,8 +79,7 @@
 		}
 	})
 	
-	let emit = defineEmits(['leftClick', 'rightClick'])
-	
+	let emit = defineEmits(['leftClick', 'rightClick']);
 	
 	let pageTitle = ref("");
 	
@@ -95,6 +96,11 @@
 			pageTitle.value = title; // 赋值标题
 		}
 	})
+	
+	// 监听标题变化
+	watch(()=>props.notitle, (n)=>{
+		pageTitle.value = n;
+	});
 	
 	let headerRightClick = ()=>{
 		// 组件绑定click事件
@@ -176,7 +182,6 @@
 					}
 
 					&.header-right-box {
-						right: 30rpx;
 						width: auto;
 					}
 				}

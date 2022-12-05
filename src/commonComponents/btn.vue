@@ -11,6 +11,16 @@
 </template>
 
 <script setup>
+	/**
+	 * btn
+	 * @description 这是一个带有节流、防抖、基本样式的按钮。
+	 * @property {String} height 高度。
+	 * @property {String} width 宽度。
+	 * @property {Boolean} isRadius 是否有圆角(默认值: true)。
+	 * @property {String} type 类型(默认值: common1), 需要自定义类型, 请在组件样式内添加相应的class样式。
+	 * @property {String} limit 是否使用节流或防抖(默认值: false), 可选值: ["debounce", "throttle"]。
+	 * @example <btn>内容</btn>
+	 */
 	import { ref, reactive } from "vue";
 	let props = defineProps({
 		height: {

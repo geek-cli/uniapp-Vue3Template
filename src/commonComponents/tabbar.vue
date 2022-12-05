@@ -83,7 +83,7 @@
 		padding-top: calc(98rpx + 20rpx);
 		padding-top: calc(98rpx + constant(safe-area-inset-bottom) + 20rpx);
 		padding-top: calc(98rpx + env(safe-area-inset-bottom) + 20rpx);
-
+	
 		.redDot {
 			right: -10rpx;
 			border-radius: 50%;
@@ -101,7 +101,7 @@
 			justify-content: center;
 			align-items: center;
 		}
-
+	
 		.content {
 			width: 100%;
 			position: fixed;
@@ -112,35 +112,26 @@
 			background-color: #fff;
 			box-shadow: 0 -2rpx 12rpx 0 rgba(0, 0, 0, 0.08);
 		}
-
+	
 		.tabbar-item {
 			display: flex;
 			justify-content: center;
-
-			&:nth-child(4) {
-				>view {
-					image {
-						position: relative;
-						left: -6rpx;
-					}
-				}
-			}
-
+	
 			>view {
 				image {
 					width: 52rpx;
 					height: 52rpx;
 				}
-
-				color: rgba(153, 153, 153, 1);
-				font-size: 24rpx;
+	
+				color: #C3C9D3;
+				font-size: 28rpx;
 				padding: 15rpx 0;
 				text-align: center;
 				font-weight: 500;
 			}
-
+	
 			.act {
-				color: #35CB60;
+				color: #3F63F5;
 			}
 		}
 	}
