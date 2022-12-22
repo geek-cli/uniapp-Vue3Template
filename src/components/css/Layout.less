@@ -1,6 +1,10 @@
 // 主题色
 @common: #4D2C07;
 @headerheight: 100rpx;
+// 边框颜色
+@borderColor: #EEEFF1;
+// 商品图背景色
+@shopBgColor: #00feed;
 
 /*每个页面公共css */
 /* flex */
@@ -125,10 +129,16 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	display: -webkit-box;
+	word-break: break-all;
+	word-wrap: break-word;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
 }
 // 滚动条隐藏
 .noScroll::-webkit-scrollbar {
 	display: none;
+}
+// 盒模型
+.borderBox  {
+	box-sizing: border-box;
 }

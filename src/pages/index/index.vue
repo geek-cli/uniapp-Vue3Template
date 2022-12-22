@@ -1,7 +1,6 @@
 <template>
 	<view class="">
 		<znx-layout>
-			
 		</znx-layout>
 	</view>
 </template>

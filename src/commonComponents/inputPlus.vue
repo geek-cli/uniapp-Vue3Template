@@ -6,14 +6,14 @@
 		<view class="container" :style="{
 			height, 
 			backgroundColor, 
-			paddingRight: '20%' 
+			paddingRight: rightSlot ? '20%' : ''
 		}">
 			<view class="title" v-if="title && titleShowType == 'line'">
 				{{title}}
 			</view>
 			<input :type="useInputType" :placeholder="inputPlaceholder" placeholder-class="input"
-				:placeholder-style="placeholderStyle" :maxlength="length" :disabled="disable" :value="modelValue"
-				@input="e=>emit('update:modelValue', e.detail.value)" />
+				:placeholder-style="placeholderStyle" :maxlength="length" :disabled="disabled" :value="modelValue"
+				@input="e=>emit('update:modelValue', e.detail.value)" @confirm="e=>emit('confirm', e.detail.value)"/>
 			<!-- 验证码 -->
 			<view class="code" v-if="type == 'code'" @click="sendCode">
 				<view class="text" v-if="!isSendCode">
@@ -38,21 +38,22 @@
 	/**
 	 * inputPlus 输入框增强
 	 * @description 输入框增加版，可以发送验证码、带眼睛的密码框、带标题的输入框、自定义右边内容的输入框。
-	 * @property {String} title 用于渲染的数据
-	 * @property {String} titleShowType 标题的展现方式(默认值: line)
-	 * @property {String} inputType 输入框类型(默认值: text)
-	 * @property {String} type 组件类型(默认值: common)
-	 * @property {Boolean} isBorder 是否有边框线(默认值: true)
-	 * @property {Null} placeholderStyle 占位符样式
-	 * @property {String} length 输入框文本长度(默认值: -1)，-1为不限长度
-	 * @property {Number} timer 倒计时长(默认: 60s)
-	 * @property {String} height 组件高度
-	 * @property {Boolean} disabled 组件是否禁用(默认: false)
-	 * @property {String} inputPlaceholder 输入框占位符
-	 * @property {String} codeText type为code时,展示的发送验证的文本描述
-	 * @property {String, Number} modelValue 输入框值
-	 * @property {String} isCanSendCode type为code时,用来判断是否可以发送验证码
-	 * @property {String} isOpenTheCountdown type为code时,是否开启倒计时
+	 * @property {String} title 标题。
+	 * @property {String} titleShowType 标题的展现方式(默认值: line)。
+	 * @property {String} inputType 输入框类型(默认值: text)。
+	 * @property {String} type 组件类型(默认值: common)。
+	 * @property {Boolean} isBorder 是否有边框线(默认值: true)。
+	 * @property {Null} placeholderStyle 占位符样式。
+	 * @property {String} length 输入框文本长度(默认值: -1)，-1为不限长度。
+	 * @property {Number} timer 倒计时长(默认: 60s)。
+	 * @property {String} height 组件高度。
+	 * @property {Boolean} disabled 组件是否禁用(默认: false)。
+	 * @property {String} inputPlaceholder 输入框占位符。
+	 * @property {String} codeText type为code时,展示的发送验证的文本描述。
+	 * @property {String | Number} modelValue 输入框值。
+	 * @property {Boolean | Number} isCanSendCode type为code时，用来判断是否可以发送验证码。
+	 * @property {String} isOpenTheCountdown type为code时,是否开启倒计时。
+	 * @property {Boolean} rightSlot 是否有右插槽(默认值: false)。
 	 * @example <inputPlus title="标题" v-model="modelValue"></inputPlus>
 	 */
 	import { ref, reactive, inject, toRefs, watch } from "vue";
@@ -128,7 +129,7 @@
 		// 是否可以发送验证码
 		isCanSendCode: {
 			default: false,
-			type: Boolean
+			type: [Boolean, Number]
 		},
 		// 不可发送验证码的提示语
 		noCanSendCodeText: {
@@ -138,11 +139,16 @@
 		isOpenTheCountdown: {
 			default: false,
 			type: Boolean
+		},
+		// 是否有右插槽
+		rightSlot: {
+			default: false,
+			type: Boolean
 		}
 	})
 	
 	// 组件自定义事件
-	let emit = defineEmits(["code", "update:modelValue"])
+	let emit = defineEmits(["code", "update:modelValue", "confirm"])
 	
 	// 使用的input类型
 	let useInputType = ref(props.type == 'password' ? 'password' : props.inputType);

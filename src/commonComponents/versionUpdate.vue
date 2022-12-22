@@ -30,7 +30,7 @@
 <script setup>
 	/**
 	 * VersionUpdate 版本更新
-	 * @description 用于APP版本更新。
+	 * @description 用于APP版本更新, 只需要将本组将放置在需要检测版本的主页面即可，需要更新时便会自动弹出。
 	 * @example <waterfall :value="flowList"></waterfall>
 	 */
 	import { ref, onMounted, getCurrentInstance } from "vue";

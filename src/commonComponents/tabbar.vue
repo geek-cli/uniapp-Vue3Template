@@ -19,8 +19,8 @@
 	/**
 	 * tabbar 底部导航栏
 	 * @description 这是一个底部导航栏，用于快速构建底部导航栏。
-	 * @property {String} ident 用于声明当前选中的底部导航栏
-	 * @example <tabbar ident="home"></tabbar>
+	 * @property {String} ident 当前选中的底部导航栏的id
+	 * @example <tabbar ident=""></tabbar>
 	 */
 	import {
 		ref,

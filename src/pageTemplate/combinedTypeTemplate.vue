@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-	import { ref, reactive, inject, toRefs } from "vue";
+	import { ref, reactive, inject, toRefs, watch } from "vue";
 	import { onLoad } from '@dcloudio/uni-app';
 	// 获取全局对象
 	const global = inject('global');

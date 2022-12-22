@@ -244,15 +244,22 @@ export default {
 	// 成功之后则会返回一个 key: value的形式 会去除其他的验证
 	// 如有不需要验证的属性，则该属性不写成key: {}, 而是key:value
 	// 自定义验证则需要custom是一个函数 且 需要返回 true 或 false
+	// 表单验证方法
+	// 该方法验证失误会返回一个fasle
+	// 成功之后则会返回一个 key: value的形式 会去除其他的验证
+	// 如有不需要验证的属性，则该属性不写成key: {}, 而是key:value
+	// 自定义验证则需要custom是一个函数 且 需要返回 true 或 false
 	formValidation(reg) {
 		let copy = Object.assign({}, reg);
 		for (var key in copy) {
 			if (Object.prototype.toString.call(copy[key]) == '[object Object]') {
 				// 如果存在自定义验证
 				if (copy[key].custom && Object.prototype.toString.call(copy[key].custom) == '[object Function]') {
-					let result = copy[key].custom(copy[key].value);
+					let result = copy[key].custom({
+						value: copy[key].value,
+						name: key
+					});
 					if (!result) {
-						this.commonToast(copy[key].err);
 						return false;
 					}
 				} else if (!copy[key].value) {
@@ -269,5 +276,5 @@ export default {
 			}
 		}
 		return copy
-	},
+	}
 };
