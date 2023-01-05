@@ -139,12 +139,37 @@
 					value -= this.step;
 					this.inputValue = value.toFixed(decimal);
 				}
+				
+				// 触发事件
+				this.customEvent('update');
+				this.customEvent('change')
 			},
-			
 			// 输入事件
 			input(e) {
-				this.inputValue = e.detail.value;
+				// 本次输入的内容
+				let v = e.detail.value;
+				// 复制目前的内容
+				let copyInputValue = this.inputValue;
+				// 目前的输入内容
+				this.inputValue = v;
+				// 校正数量
 				this.correctingNum(this.inputValue);
+				
+				// 更新绑定的数据
+				this.customEvent('update');
+				
+				// 为了防止.重复触发change事件
+				// 复制本次输入的内容
+				let copyV = v;
+				// 如果只能输入整数 则 需要直接取整数部分
+				if(this.integer) {
+					copyInputValue = parseInt((copyV + '').indexOf('.') != -1 ? this.inputValue : copyInputValue);
+					copyV = parseInt(copyV);
+				}
+				if(copyInputValue != copyV) {
+					// 触发chage事件
+					this.customEvent('change');
+				}
 			},
 			// 校正数量
 			correctingNum(value) {
@@ -161,7 +186,7 @@
 						this.inputValue = this.maxValue.toFixed(decimal);
 					})
 				} else if(this.integer){
-					// // 检测是否包含.
+					// 检测是否包含.
 					let index = (value + '').indexOf('.');
 					if(index != -1) {
 						this.$nextTick(()=>{
@@ -169,6 +194,23 @@
 						})
 					}
 				}
+			},
+			// 事件
+			customEvent(eventName, value = this.inputValue) {
+				this.$nextTick(()=>{
+					// 如果不是更新事件 则 触发相应的自定义事件
+					if(eventName !== 'update') {
+						this.$emit(eventName, value);
+					} else {
+						// 触发更新事件 
+						// #ifdef VUE3
+						this.$emit('update:modelValue', this.inputValue);
+						// #endif
+						// #ifndef VUE3
+						this.$emit('input', this.inputValue);
+						// #endif
+					}
+				})
 			}
 		},
 		mounted() {
@@ -192,17 +234,6 @@
 				this.correctingNum(this.inputValue);
 			},
 			// #endif
-			inputValue(v1) {
-				this.$nextTick(()=>{
-					// #ifdef VUE3
-					this.$emit('update:modelValue', v1);
-					// #endif
-					// #ifndef VUE3
-					this.$emit('input', v1);
-					// #endif
-					this.$emit('change', v1);
-				})
-			},
 			maxValue() {
 				this.correctingNum(this.inputValue);
 			},

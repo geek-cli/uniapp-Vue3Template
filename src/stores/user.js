@@ -3,14 +3,17 @@ import { defineStore } from 'pinia';
 import api from "@/units/server/api.js";
 
 export const useUserStore = defineStore('user', ()=>{
-	let userInfo = ref({a: 1});
+	// 用户信息
+	let userInfo = $ref(uni.getStorageSync("user"));
 	// 更新用户信息
-	const uploadUserInfo = ()=>{
-		api.userInfo("", {
-			success: (data) => {
-				userInfo.value = data;
-			},
+	const updataUserInfo = ()=>{
+		api.fetchUserInfo().then(res=>{
+			uni.setStorageSync("user", res.user);
+			userInfo = res.user;
 		});
 	};
-	return { userInfo, uploadUserInfo };
+	return $$({
+		userInfo,
+		updataUserInfo
+	});
 })

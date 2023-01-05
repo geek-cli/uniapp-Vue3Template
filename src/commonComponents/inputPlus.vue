@@ -151,16 +151,16 @@
 	let emit = defineEmits(["code", "update:modelValue", "confirm"])
 	
 	// 使用的input类型
-	let useInputType = ref(props.type == 'password' ? 'password' : props.inputType);
+	let useInputType = $ref(props.type == 'password' ? 'password' : props.inputType);
 	// 是否已经发送验证码
-	let isSendCode = ref(false);
+	let isSendCode = $ref(false);
 	// 倒计时时长
-	let countdownTimer = ref(props.timer);
+	let countdownTimer = $ref(props.timer);
 	
 	// 发送验证码
 	let sendCode = ()=>{
 		if (props.isCanSendCode) {
-			if (!isSendCode.value) {
+			if (!isSendCode) {
 				// 执行发送code时间
 				emit('code');
 			}
@@ -172,19 +172,19 @@
 	// 监听是否开启倒计时
 	watch(()=> props.isOpenTheCountdown, (newValue)=>{
 		// 如果为开启倒计时
-		if (newValue && !isSendCode.value) {
+		if (newValue && !isSendCode) {
 			// 修改验证码状态
-			isSendCode.value = true;
+			isSendCode = true;
 			// 增加倒计时
 			let time = setInterval(() => {
 				// 判断是否倒计时结束
-				if (countdownTimer.value <= 1) {
+				if (countdownTimer <= 1) {
 					// 重置时间
-					countdownTimer.value = props.timer;
-					isSendCode.value = false;
+					countdownTimer = props.timer;
+					isSendCode = false;
 					clearInterval(time);
 				} else {
-					countdownTimer.value--;
+					countdownTimer--;
 				}
 			}, 1000)
 		}

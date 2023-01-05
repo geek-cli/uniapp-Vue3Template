@@ -79,25 +79,25 @@
 	
 	let emit = defineEmits(['leftClick', 'rightClick']);
 	
-	let pageTitle = ref("");
+	let pageTitle = $ref("");
 	
 	// 组件创建时
 	onMounted(()=>{
 		// 获取当前页面路由标题
 		if (props.notitle) {
-			pageTitle.value = props.notitle;
+			pageTitle = props.notitle;
 		} else {
 			let routes = getCurrentPages(); // 获取当前打开过的页面路由数组
 			let url = routes[routes.length - 1].route // 获取当前页面路由，也就是最后一个打开的页面路由
 			let page = pages.pages.filter(page=> page.path == url)[0]; // 通过过滤找出当前页面
 			let title = page.title; // 获取当前页面标题
-			pageTitle.value = title; // 赋值标题
+			pageTitle = title; // 赋值标题
 		}
 	})
 	
 	// 监听标题变化
 	watch(()=>props.notitle, (n)=>{
-		pageTitle.value = n;
+		pageTitle = n;
 	});
 	
 	let headerRightClick = ()=>{

@@ -52,23 +52,23 @@
 	// emit
 	let emit = defineEmits(['change'])
 	
-	let animation = ref(false);
-	let platform = ref(systemInfo.platform);
+	let animation = $ref(false);
+	let platform = $ref(systemInfo.platform);
 	
 	// 方法
 	let moveHandle = ()=>{
 		return
 	}
 	let show = ()=>{
-		animation.value = true;
+		animation = true;
 		return true;
 	}
 	let hide = ()=>{
-		animation.value = false;
+		animation = false;
 		return false;
 	}
 	let toggle = ()=>{
-		return !animation.value ? show() : hide()
+		return !animation ? show() : hide()
 	}
 	
 	// 计算属性

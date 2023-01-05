@@ -3,7 +3,7 @@
  */
 
 // h5微信支付依赖
-import wx from "jweixin-module";
+// import wxs from "jweixin-module";
 
 export default {
 	/**

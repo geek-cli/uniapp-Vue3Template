@@ -11,7 +11,7 @@ import {
 import App from "./App.vue";
 export function createApp() {
 	const app = createSSRApp(App);
-    app.use(piniaInstall);
+	app.use(piniaInstall);
 	// 挂载路由
 	router.setupRouter(app);
 	// 配置全局变量 页面中使用 inject 接收

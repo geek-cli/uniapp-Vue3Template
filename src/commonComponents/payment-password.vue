@@ -131,39 +131,39 @@
 	})
 	let emit = defineEmits(['cancel', 'submit'])
 	
-	let activeInput = ref(0); // 当前输入的下标
+	let activeInput = $ref(0); // 当前输入的下标
 	let digitalList = reactive(['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', '-1']);//键盘
-	let paymentPwd = ref(''); // 安全密码内容
-	let dkFlag = ref(true); // 安全密码键盘的显示与隐藏
-	let current = ref(0);
+	let paymentPwd = $ref(''); // 安全密码内容
+	let dkFlag = $ref(true); // 安全密码键盘的显示与隐藏
+	let current = $ref(0);
 	let paymentPwds = reactive([]);// 上一次安全密码内容,历史安全密码,
-	let msgText = ref('');
-	let u50 = ref(uni.upx2px(50));
-	let ssModal = ref(null);
+	let msgText = $ref('');
+	let u50 = $ref(uni.upx2px(50));
+	let ssModal = $ref(null);
 	
 	// 计算属性
-	let payPassWord = computed(()=>{
-		var payPassWord = paymentPwd.value.split('') || [];
+	let payPassWord = $computed(()=>{
+		var payPassWord = paymentPwd.split('') || [];
 		payPassWord.fill('*');
 		return payPassWord;
 	})
-	let _forget = computed(()=>{
+	let _forget = $computed(()=>{
 		return String(props.forget) === 'false' ? false : true;
 	})
-	let _safeTips = computed(()=>{
+	let _safeTips = $computed(()=>{
 		return String(props.safeTips) === 'false' ? false : true;
 	})
-	let _digits = computed(()=>{
+	let _digits = $computed(()=>{
 		return isNaN(props.digits) ? 6 : parseInt(props.digits);
 	})
 	
-	let _mode = computed(()=>{
+	let _mode = $computed(()=>{
 		if(isNaN(props.mode) || !props.mode){
 			return 1;
 		}
 		return +props.mode
 	})
-	let _titleObj = computed(()=>{
+	let _titleObj = $computed(()=>{
 		let arr = [
 			{
 				title: '输入交易密码',
@@ -192,17 +192,17 @@
 				twoSubTitle: '请再次输入安全密码以确认'
 			}
 		]
-		return arr[_mode.value - 1];
+		return arr[_mode - 1];
 	})
 	
-	let _parentMode = computed(()=>{
-		return _mode.value === 1 || _mode.value === 4 ? 'full' : 'cover';
+	let _parentMode = $computed(()=>{
+		return _mode === 1 || _mode === 4 ? 'full' : 'cover';
 	})
-	let _parentPosition = computed(()=>{
-		return _mode.value === 1 || _mode.value === 4 ? 'bottom' : 'middle';
+	let _parentPosition = $computed(()=>{
+		return _mode === 1 || _mode === 4 ? 'bottom' : 'middle';
 	})
-	let showPrevText = computed(()=>{
-		return current.value >= (_mode.value - 1) || (_mode.value === 5 && current.value > 0) ? true : false;
+	let showPrevText = $computed(()=>{
+		return current >= (_mode - 1) || (_mode === 5 && current > 0) ? true : false;
 	})
 	
 	// 方法
@@ -212,7 +212,7 @@
 	// 模态框显示或者关闭的回调
 	let changeModal = (e)=>{ // 返回是一个Boolean值 
 		if(e){
-			current.value = 0;
+			current = 0;
 			changeKeyboard();//默认拉起键盘
 		} else {
 			changeKeyboard(false);//默认拉起键盘
@@ -221,9 +221,9 @@
 	}
 	// 开关键盘
 	let changeKeyboard = (flag = true)=>{
-		dkFlag.value = flag;
+		dkFlag = flag;
 		if(!flag) {
-			activeInput.value = -1
+			activeInput = -1
 		}
 	}
 	/*
@@ -233,23 +233,23 @@
 		toggle	动态判断
 	*/
 	let modalFun = (pro)=>{
-		pro ? ssModal.value[pro]() : '';
+		pro ? ssModal[pro]() : '';
 	}
 	let clear = ()=>{
-		paymentPwd.value = '';
-		activeInput.value = 0;
-		paymentPwds.splice(current.value, 1);
+		paymentPwd = '';
+		activeInput = 0;
+		paymentPwds.splice(current, 1);
 	}
 	let clearAll = ()=>{
-		paymentPwd.value = '';
-		activeInput.value = 0;
-		current.value = 0;
+		paymentPwd = '';
+		activeInput = 0;
+		current = 0;
 		paymentPwds = [];
 	}
 	let showError = (msg)=>{
-		if(!msg) return msgText.value = '';
-		if(_mode.value !== 1 && _mode.value !== 4){
-			msgText.value = msg;
+		if(!msg) return msgText = '';
+		if(_mode !== 1 && _mode !== 4){
+			msgText = msg;
 		}else{
 			uni.showToast({
 				title: msg
@@ -285,26 +285,26 @@
 	}
 	let submit = (clickFlag)=>{
 		if(props.trigger !== 'auto' && !clickFlag) return;
-		if(paymentPwd.value.length !== _digits.value){
-			showError('请输入' + _digits.value + '位安全密码');
+		if(paymentPwd.length !== _digits){
+			showError('请输入' + _digits + '位安全密码');
 		}else{
 			showError('');
-			if(_mode.value === 5 || _mode.value === 4 || current.value >= (_mode.value - 1)){
-				if(_mode.value === 5 && current.value === 0){//下一步，再次输入
+			if(_mode === 5 || _mode === 4 || current >= (_mode - 1)){
+				if(_mode === 5 && current === 0){//下一步，再次输入
 					return changeSwiper(1);
 				}
-				if(current.value > 0){//需要校验2次安全密码的是否相等
-					if(paymentPwd.value !== paymentPwds[current.value - 1]){
+				if(current > 0){//需要校验2次安全密码的是否相等
+					if(paymentPwd !== paymentPwds[current - 1]){
 						showError('两次安全密码输入不一致');
 						setTimeout(() => {
-							paymentPwd.value = '';
-							paymentPwds[current.value] = '';
-							activeInput.value = 0;
+							paymentPwd = '';
+							paymentPwds[current] = '';
+							activeInput = 0;
 						}, 300)
 						return ;
 					}
 					showError('');
-					if(_mode.value === 2){//设置安全密码
+					if(_mode === 2){//设置安全密码
 						uni.showLoading({
 							title: '正在设置密码'
 						});
@@ -313,12 +313,12 @@
 							uni.hideLoading();
 							let response = {//模拟返回
 								code: 1,
-								value: paymentPwd.value
+								value: paymentPwd
 							}
 							if(response.code === 1){
 								emit('submit', {//这里是传出去给调用者的，参数任意下，只要能区分就行
 									type: 'reset',
-									value: paymentPwd.value
+									value: paymentPwd
 								});
 								modalFun('hide');
 							}
@@ -337,7 +337,7 @@
 							if(response.code === 1){
 								emit('submit', {
 									type: 'modify',
-									value: paymentPwd.value
+									value: paymentPwd
 								});
 								modalFun('hide');
 							}
@@ -347,7 +347,7 @@
 				}
 				checkSafePwd('check');
 			}else{
-				if(_mode.value === 3 && current.value === 0){//校验安全密码正确性
+				if(_mode === 3 && current === 0){//校验安全密码正确性
 					checkSafePwd('verify');
 					return ;
 				}
@@ -369,7 +369,7 @@
 				if(type === 'check'){
 					emit('submit', {//设置或者重置新安全密码
 						type: 'check',
-						value: paymentPwd.value
+						value: paymentPwd
 					});
 					modalFun('hide');
 				}else{
@@ -387,47 +387,47 @@
 		if(isNaN(num)){
 			num = 1;
 		}
-		current.value += num;
-		paymentPwd.value = paymentPwds[current.value] || '';
-		let activeInput = paymentPwd.value.length
-		activeInput = activeInput - (activeInput >= _digits.value ? 1 : 0);
+		current += num;
+		paymentPwd = paymentPwds[current] || '';
+		let activeInput = paymentPwd.length
+		activeInput = activeInput - (activeInput >= _digits ? 1 : 0);
 	}
 	let getKeyNumber = (val)=>{
-		let paymentPwdArr = paymentPwd.value.split('');
-		if (val === '' || (val != -1 && paymentPwdArr.length === _digits.value)) { //空或者已经达到最大值
+		let paymentPwdArr = paymentPwd.split('');
+		if (val === '' || (val != -1 && paymentPwdArr.length === _digits)) { //空或者已经达到最大值
 			
-			if(paymentPwdArr.length === _digits.value && props.trigger === 'auto'){
+			if(paymentPwdArr.length === _digits && props.trigger === 'auto'){
 				submit();
 				return ;
 			}
 			return false;
 		} else if (val != -1) { //数字输入
-			paymentPwdArr.splice(activeInput.value, 0, val);
-			activeInput.value++;
-			paymentPwd.value = paymentPwdArr.join('');
-			paymentPwds[current.value] = paymentPwd.value;
-			if(paymentPwdArr.length === _digits.value && props.trigger === 'auto'){
+			paymentPwdArr.splice(activeInput, 0, val);
+			activeInput++;
+			paymentPwd = paymentPwdArr.join('');
+			paymentPwds[current] = paymentPwd;
+			if(paymentPwdArr.length === _digits && props.trigger === 'auto'){
 				submit();
 				return ;
 			}
 		} else { //删除
-			if (activeInput.value >= 0) {
-				activeInput.value !== 0 && activeInput.value--;
-				paymentPwdArr.splice(activeInput.value, 1);
-				paymentPwd.value = paymentPwdArr.join('');
-				paymentPwds[current.value] = paymentPwd.value;
+			if (activeInput >= 0) {
+				activeInput !== 0 && activeInput--;
+				paymentPwdArr.splice(activeInput, 1);
+				paymentPwd = paymentPwdArr.join('');
+				paymentPwds[current] = paymentPwd;
 			}
 		}
 	}
 	let getKeyboard = e=>{
 		let index = e && e.target.dataset.index;
 		if (index === undefined) {
-			activeInput.value = 0;
+			activeInput = 0;
 			changeKeyboard(false);
 			return ;
 		}
-		var _length = paymentPwd.value.length;
-		activeInput.value = index <= _length ? index : _length;
+		var _length = paymentPwd.length;
+		activeInput = index <= _length ? index : _length;
 		changeKeyboard();
 	}
 

@@ -7,12 +7,14 @@ export default {
 		return `/static/img/${path}`
 	},
 	// 返回上一层页面
-	back() {
+	back(delta = 1) {
 		// #ifndef H5
-		uni.navigateBack();
+		uni.navigateBack({
+			delta
+		});
 		// #endif
 		// #ifdef H5
-		history.back();
+		history.go(Math.abs(delta) * -1);// 兼容h5端刷新页面后的返回
 		// #endif
 	},
 	// 上传图片

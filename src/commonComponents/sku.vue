@@ -1,7 +1,7 @@
 <template>
 	<view class="sku" v-if="isV3 ? modelValue : value" @click="isMaskClose ? close : ''">
 		<view class="shopSpecsPopup">
-			<image class="close" src="@/static/img/sku/close.png" @click="close"></image>
+			<image class="close" src="../static/img/sku/close.png" @click="close"></image>
 			<view class="content">
 				<view class="info flex">
 					<view class="cover" :style="{backgroundImage: `url(${selectSku.logo || defaultCover})`}"></view>
@@ -12,7 +12,7 @@
 						<view class="price flex f-y-c" :style="{color: themeRGB}">
 							<view class="uity">￥</view>{{selectSku.id ? selectSku.price : `${showAreaPrice[0]}-${showAreaPrice[1]}`}}
 						</view>
-						<view class="stock">
+						<view class="stock" v-if="isShowStock">
 							库存: {{selectSku.id ? selectSku.stock : `${showAreaStock[0]}-${showAreaStock[1]}`}}
 						</view>
 					</view>
@@ -25,26 +25,20 @@
 					<view class="item" v-for="(skuArr, skuArrKey) in r.result" :key="'skuArrKey' + skuArrKey">
 						<view class="title">{{skuArrKey}}</view>
 						<view class="specsValueList flex f-w">
-							<template v-for="(sku, skuKey) in skuArr">
-								<view class="specs act" v-if="sku.active"
-									:key="'sku' + skuKey"
-									:style="{
-										backgroundColor: themeRGBA,
-										color: themeRGB,
-										border: `2rpx dashed ${themeRGB}`
-									}"
-									@click="bindEvent(sku, skuArr, skuArrKey)"
-								>
-									{{sku.value}}
-								</view>
-								<view class="specs" v-else
-									:key="'sku' + skuKey"
-									:class="{ disabled: sku.disabled }"
-									@click="bindEvent(sku, skuArr, skuArrKey)"
-								>
-									{{sku.value}}
-								</view>
-							</template>
+							<view class="specs"
+								v-for="(sku, skuKey) in skuArr"
+								:key="'sku' + skuKey"
+								:class="{disabled: sku.disabled}"
+								:style="sku.active ? 
+								{
+									backgroundColor: themeRGBA,
+									color: themeRGB,
+									border: `2rpx dashed ${themeRGB}`
+								} : {}"
+								@click="bindEvent(sku, skuArr, skuArrKey)"
+							>
+								{{sku.value}}
+							</view>
 						</view>
 					</view>
 				</view>
@@ -77,12 +71,15 @@
 	 * @property {Boolean} value 是否显示sku组件(默认值: false, v2显示)。
 	 * @property {Boolean} isMaskClose 是否可以点击遮罩层关闭(默认值: false)。
 	 * @property {Boolean} isSelectMinPriceSku 是否默认选中最低价格的sku(默认值: true)。
+	 * @property {Boolean} selectSkuIndex 默认选中的sku下标。
 	 * @property {String} defaultTitle 默认标题，用于没有选中完整的sku时展示(默认值: '商品')。
 	 * @property {String} defaultCover 默认封面图，用于没有选中完整的sku时展示。
+	 * @property {Number} defaultNum 默认购买商品数量。
 	 * @property {Array} themeColor 主题色，需要传入一个数组长度为3的数组，分别对应rgb三个颜色的值，例如: [84, 164, 255]。
 	 * @property {String} btnConfirmText 确认按钮文字(默认值: '确认')。
 	 * @property {String} notStockText 库存不足文字(默认值: '库存不足')。
 	 * @property {String} notSelectSku 未选择完整的sku时的文字提示(默认值: '请选择完整的sku属性')。
+	 * @property {Boolean} isShowStock 是否展示库存。
 	 * @event {Function} confirm 点击确认按钮时触发的事件，会返回e， e = { sku, skuText , num }，分别对应选中的sku值 、sku属性名 、输入框内的数量。
 	 * @event {Function} skuChange sku发生变化时出发的事件，如果有选中完整的sku则会返回该sku，否则会返回{}。
 	 * @event {Function} close 关闭sku组件触发事件。
@@ -128,6 +125,11 @@
 				default: true,
 				type: Boolean
 			},
+			// 默认选中的sku下标
+			selectSkuIndex: {
+				default: null,
+				type: Number
+			},
 			// 默认标题
 			defaultTitle: {
 				default: "商品标题",
@@ -137,6 +139,11 @@
 			defaultCover: {
 				default: "",
 				type: String
+			},
+			// 默认购买商品数量
+			defaultNum: {
+				default: 1,
+				type: Number
 			},
 			// 主题色
 			themeColor: {
@@ -157,6 +164,11 @@
 			notSelectSku: {
 				default: "请选择完整的sku属性",
 				type: String
+			},
+			// 是否展示库存
+			isShowStock: {
+				default: true,
+				type: Boolean
 			}
 		},
 		// data() 返回的属性将会成为响应式的状态
@@ -472,6 +484,20 @@
 			},
 			
 			/**
+			 * 选中某项sku
+			 * @param {Number} index 选中的skuIndex
+			 */
+			selectAppointSku(index) {
+				if(!this.data[index]) return console.error('请输入正确的sku下标'); 
+				let sku_attrs = this.data[index].sku_attrs;
+				for(var key in sku_attrs) {
+					// 找出对应项并选中
+					this.r.result[key][sku_attrs[key]].active = true;
+				}
+				this.updateStatus(this.getSelectedItem());
+			},
+			
+			/**
 			 * 找出区间数据
 			 */
 			findAreaData() {
@@ -514,6 +540,9 @@
 				this.keys = [];
 				this.selectedCache = [];
 				
+				// skus 长度为空则没必要往下继续进行了
+				if(!data.length) return;
+				
 				// 拼接主题色
 				this.joinThemColor(this.themeColor);
 				
@@ -531,8 +560,11 @@
 				// 找到区间数据
 				this.findAreaData();
 				
-				// 如果需要选中默认最便宜的sku
-				if(this.isSelectMinPriceSku) {
+				// 如果需要选中某项sku
+				if(this.selectSkuIndex) {
+					this.selectAppointSku(this.selectSkuIndex);
+				} else if(this.isSelectMinPriceSku) {
+					// 如果需要选中默认最便宜的sku
 					this.selectMinPriceSku();
 				}
 			},
@@ -585,12 +617,20 @@
 				this.$emit('input', true);
 				// #endif
 				this.$emit('open');
+			},
+			
+			// 重置购买数量
+			resetNum() {
+				this.num = this.defaultNum;
 			}
 		},
 		// 监听
 		watch: {
-			data(n) {
-				this.init(n);
+			data: {
+				handler(n) {
+					this.init(n);
+				},
+				deep:true
 			},
 			// #ifdef VUE3
 			modelValue(n) {
@@ -610,10 +650,15 @@
 			},
 			themeColor(n) {
 				this.joinThemColor(n);
+			},
+			selectSkuIndex(n) {
+				this.selectAppointSku(n);
 			}
 		},
 		// 挂载时
 		mounted() {
+			// 赋值默认购买商品数量
+			this.num = this.defaultNum;
 			this.init(this.data);
 		}
 	}
@@ -725,7 +770,7 @@
 			}
 		
 			.specsList {
-				max-height: 350rpx;
+				max-height: 45vh;
 				overflow-y: auto;
 				margin-bottom: 30rpx;
 				.item {
@@ -759,3 +804,4 @@
 		}
 	}
 </style>
+

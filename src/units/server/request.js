@@ -73,9 +73,7 @@ const requestErr = (response) => {
 				icon: 'none'
 			});
 			uni.removeStorageSync('ticket')
-			router.push({
-				name: "login"
-			})
+			router.push({name: 'login'})
 			break
 		case 404:
 			uni.showToast({
@@ -95,9 +93,7 @@ const requestErr = (response) => {
 			if (response.data.message === '请重新登录' || response.data.message === '账号在其他地方登录') {
 				uni.removeStorageSync('token')
 				uni.removeStorageSync('user')
-				router.push({
-					name: "login"
-				})
+				router.push({name: 'login'})
 			}
 			break
 		case 408:
@@ -110,18 +106,7 @@ const requestErr = (response) => {
 			break
 		case 422:
 			uni.hideLoading();
-
 			console.warn('422 message')
-			// let errMessage = ''
-			// response.data.errors.message.default.map((data) =>{
-			//   for (const key in data) {
-			//     data[key].map((mapData)=>{
-			//       errMessage += mapData + ','
-			//     })
-			//   }
-			// })
-			// console.log(errMessage)
-			// uni.hideLoading();
 			console.warn((Object.keys(response.data.errors.message || {}) || []).map(k => {
 				return response.data.errors.message[k].join(',')
 			}).join('\n') || '网络不给力！！请稍后再试')
@@ -136,18 +121,14 @@ const requestErr = (response) => {
 			if (response.data.message === '请重新登录') {
 				uni.removeStorageSync('token')
 				uni.removeStorageSync('user')
-				router.push({
-					name: "login"
-				})
+				router.push({name: 'login'})
 			}
 			break
 		case 500:
 			if (response.data.message === 'Unauthenticated.') {
 				uni.removeStorageSync('token')
 				uni.removeStorageSync('user')
-				router.push({
-					name: "login"
-				})
+				router.push({name: 'login'})
 			} else if (response.data.message === 'Unauthentdisable') {
 				uni.removeStorageSync('token')
 				uni.removeStorageSync('user')
@@ -223,12 +204,12 @@ const requestMethod = (url, params, auth, method, isLoading = true, hasFile = fa
 				duration: 2000
 			});
 		} else if (ticket === 'next') {
-			return requestMethod(url, params, auth, method);
+			requestMethod(url, params, auth, method).then(res=>{
+				resolve(res)
+			});
 		} else {
 			if (auth && !uni.getStorageSync('token')) {
-				router.push({
-					name: "login"
-				})
+				router.push({name: 'login'})
 				uni.hideLoading();
 				console.error('需要登录状态', url);
 				return
