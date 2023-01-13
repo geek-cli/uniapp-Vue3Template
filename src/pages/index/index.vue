@@ -1,7 +1,7 @@
 <template>
 	<view class="">
 		<znx-layout>
-			
+			123
 		</znx-layout>
 	</view>
 </template>

@@ -6,13 +6,13 @@
 		fontSize: size
 	}">
 		<view class="reduce" @click="change('-')" :style="{
-			lineHeight: height * 0.95 + 'rpx',
+			lineHeight: height * 0.80 + 'rpx',
 			color: inputValue == minValue ? disabledColor : '#000',
 			backgroundColor: inputValue == minValue ? disabledBgColor : bgColor
 		}">-</view>
 		
 		<!-- 按钮 -->
-		<input type="number" :style="{backgroundColor: bgColor}" :maxlength="-1" :value="inputValue" @input="input"/>
+		<input type="number" :style="{backgroundColor: bgColor}" :maxlength="-1" :value="inputValue" @input="input"  @blur="inputValue === '' ? inputValue = minValue : ''"/>
 		
 		<view class="add" @click="change('+')" :style="{
 			lineHeight: height * 0.95 + 'rpx',
@@ -177,21 +177,26 @@
 				let valueArr = (this.step + '').split('.');
 				// 保留小数长度
 				let decimal = this.decimalLength != -1 ? this.decimalLength : valueArr.length > 1 ? valueArr[1].length : 0;
-				if (value < this.minValue) {
-					this.$nextTick(()=>{
-						this.inputValue = this.minValue.toFixed(decimal);
-					})
-				} else if (this.maxValue !== -1 && value > this.maxValue) {
-					this.$nextTick(()=>{
-						this.inputValue = this.maxValue.toFixed(decimal);
-					})
-				} else if(this.integer){
-					// 检测是否包含.
-					let index = (value + '').indexOf('.');
-					if(index != -1) {
+				// 如果用户输入的内容不是 ''
+				if(value !== '') {
+					// 如果用户输入的内容小于最小值 则等于 最小值
+					if (value < this.minValue) {
 						this.$nextTick(()=>{
-							this.inputValue = value.slice(0, index);
+							this.inputValue = this.minValue.toFixed(decimal);
 						})
+					} else if (this.maxValue !== -1 && value > this.maxValue) {
+						// 如果用户输入的内容大于最大值 则等于 最大值
+						this.$nextTick(()=>{
+							this.inputValue = this.maxValue.toFixed(decimal);
+						})
+					} else if(this.integer){
+						// 检测是否包含. 如果包含 则删除
+						let index = (value + '').indexOf('.');
+						if(index != -1) {
+							this.$nextTick(()=>{
+								this.inputValue = value.slice(0, index);
+							})
+						}
 					}
 				}
 			},

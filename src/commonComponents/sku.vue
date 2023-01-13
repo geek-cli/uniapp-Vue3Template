@@ -22,19 +22,18 @@
 					<znx-numBox :width="200" integer v-model="num" :minValue="selectSku.stock == 0 ? 0 : 1" :maxValue="selectSku.id ? selectSku.stock : showAreaStock[1]"></znx-numBox>
 				</view>
 				<view class="specsList">
-					<view class="item" v-for="(skuArr, skuArrKey) in r.result" :key="'skuArrKey' + skuArrKey">
+					<view class="item" v-for="(skuArr, skuArrKey) in r.result" :key="skuArrKey">
 						<view class="title">{{skuArrKey}}</view>
 						<view class="specsValueList flex f-w">
 							<view class="specs"
 								v-for="(sku, skuKey) in skuArr"
-								:key="'sku' + skuKey"
+								:key="skuKey"
 								:class="{disabled: sku.disabled}"
-								:style="sku.active ? 
-								{
-									backgroundColor: themeRGBA,
-									color: themeRGB,
-									border: `2rpx dashed ${themeRGB}`
-								} : {}"
+								:style="{
+									backgroundColor: sku.active ? themeRGBA : '',
+									color: sku.active ? themeRGB : '' ,
+									border: sku.active ? `2rpx dashed ${themeRGB}` : '' 
+								}"
 								@click="bindEvent(sku, skuArr, skuArrKey)"
 							>
 								{{sku.value}}
