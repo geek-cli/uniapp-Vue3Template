@@ -12,6 +12,7 @@ export const useUserStore = defineStore('user', ()=>{
 			userInfo = res.user;
 		});
 	};
+	
 	return $$({
 		userInfo,
 		updataUserInfo

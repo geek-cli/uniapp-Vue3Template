@@ -1,8 +1,6 @@
 <template>
 	<view class="">
-		<znx-layout>
-			123
-		</znx-layout>
+		<w-layout></w-layout>
 	</view>
 </template>
 

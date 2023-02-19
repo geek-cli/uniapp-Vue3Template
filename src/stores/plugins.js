@@ -1,7 +1,9 @@
 import {
 	createPinia
 } from 'pinia';
-
+import {
+	createPersistedState
+} from "pinia-persistedstate-plugin";
 export const pinia = createPinia();
 
 export const piniaInstall = (app) => {

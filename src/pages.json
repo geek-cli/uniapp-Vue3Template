@@ -2,7 +2,7 @@
 	"easycom": {
 	    "autoscan": true,
 	    "custom": {
-	        "znx-(.*)": "@/commonComponents/$1.vue" // 匹配commonComponents目录内的vue文件
+	        "w-(.*)": "@/commonComponents/$1/components/$1.vue" // 匹配commonComponents目录内的vue文件
 	    }
 	},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
