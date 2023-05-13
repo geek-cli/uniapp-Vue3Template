@@ -81,6 +81,8 @@
 </template>
 
 <script>
+	// 引入 CryptoJS 库
+	import CryptoJS from "crypto-js";
 	/**
 	 * geek-sku
 	 * @description 商品sku组件。
@@ -242,12 +244,12 @@
 					for (var j = 0; j < keys.length; j++) {
 						var key = keys[j];
 						// 属性名
-						let item_name = this.getObjAppointAttr(item[key]);
+						let attr_info = this.getObjAppointAttr(item[key]);
 						
 						if (!result[key]) result[key] = [];
-						if (result[key].indexOf(item_name) < 0) result[key].push(item[key]);
+						if (result[key].indexOf(attr_info.value) < 0) result[key].push(item[key]);
 						
-						values.push(item_name);
+						values.push(attr_info.value);
 					}
 					
 					allKeys.push({
@@ -260,17 +262,17 @@
 					let obj = {};
 					result[key].forEach(item=>{
 						// 属性名
-						let item_name = this.getObjAppointAttr(item);
+						let attr_info = this.getObjAppointAttr(item);
 						// 如果本次的属性不存在 则 将该属性设置为空对象
-						if(!obj[item_name]) obj[item_name] = {};
+						if(!obj[attr_info.name]) obj[attr_info.name] = {};
 						// 本次要操作的属性 下面得赋值是为了防止已有属性被覆盖
-						obj[item_name].value = item_name;
-						obj[item_name].disabled = false;
-						obj[item_name].active = false;
+						obj[attr_info.name].value = attr_info.value;
+						obj[attr_info.name].disabled = false;
+						obj[attr_info.name].active = false;
 						
 						// 如果该sku属性是对象则取其中的name属性
 						if(Object.prototype.toString.call(item) === '[object Object]') {
-							obj[item_name] = {...obj[item_name], ...item};
+							obj[attr_info.name] = {...obj[attr_info.name], ...item};
 							this.isUseImgSku = true;
 						}
 						
@@ -339,8 +341,9 @@
 					// 每个组合的子集
 					for (var j = 0; j < allSets.length; j++) {
 						var set = allSets[j]
-						var key = set.join(this.spliter);
-			
+						// 使用CryptoJS的MD5对原属性名加密 用来禁绝因特殊符号带来的属性名错误
+						var key = CryptoJS.MD5(set.join(this.spliter)).toString();
+						
 						if (this.res[key]) {
 							this.res[key].skus.push(sku)
 						} else {
@@ -437,7 +440,7 @@
 						var item = data[dataKey];
 						if (selected[i] == item.value) return
 						copy[i] = item.value;
-						var curr = this.trimSpliter(copy.join(this.spliter), this.spliter);
+						var curr = CryptoJS.MD5(this.trimSpliter(copy.join(this.spliter), this.spliter)).toString();
 						if (this.res[curr]) {
 							item.disabled = false;
 						} else {
@@ -514,9 +517,9 @@
 				})
 				
 				for(var key in minPriceSku.sku_attrs) {
-					let item_name = this.getObjAppointAttr(minPriceSku.sku_attrs[key]);
+					let attr_info = this.getObjAppointAttr(minPriceSku.sku_attrs[key]);
 					// 找出对应项并选中
-					this.r.result[key][item_name].active = true;
+					this.r.result[key][attr_info.name].active = true;
 				}
 				this.updateStatus(this.getSelectedItem());
 			},
@@ -529,9 +532,9 @@
 				if(!this.data[index]) return console.error('请输入正确的sku下标'); 
 				let sku_attrs = this.data[index].sku_attrs;
 				for(var key in sku_attrs) {
-					let item_name = this.getObjAppointAttr(sku_attrs[key]);
+					let attr_info = this.getObjAppointAttr(sku_attrs[key]);
 					// 找出对应项并选中
-					this.r.result[key][item_name].active = true;
+					this.r.result[key][attr_info.name].active = true;
 				}
 				this.updateStatus(this.getSelectedItem());
 			},
@@ -593,6 +596,7 @@
 				
 				//计算组合数据
 				this.r = this.combineAttr(data, this.keys);
+				console.log(this.r);
 				// 生成所有子集是否可选、库存状态 map
 				this.buildResult(this.r.items);
 				
@@ -693,11 +697,21 @@
 			
 			// 获取对象中指定属性
 			getObjAppointAttr(obj, attr = 'name') {
+				// 用来储存属性中对应的值
+				let value = "";
 				// 如果该sku属性是对象则取其中的name属性
 				if(Object.prototype.toString.call(obj) === '[object Object]') {
-					return obj[attr];
+					value = obj[attr];
 				}else {
-					return obj;
+					value = obj;
+				}
+
+				// 使用CryptoJS的MD5对原属性名加密 用来禁绝因特殊符号带来的属性名错误
+				let name = CryptoJS.MD5(value).toString();
+				
+				return {
+					value,
+					name
 				}
 			},
 			
@@ -736,6 +750,7 @@
 		watch: {
 			data: {
 				handler(n) {
+					console.log(n);
 					this.init(n);
 				},
 				deep:true

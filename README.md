@@ -33,7 +33,7 @@
 | quickapp-webview-union  | 快应用联盟 |
 | quickapp-webview-huawei | 快应用华为 |
 ## 项目内常用组件
-*内嵌有部分常用组件无需注册，以 `<znx-文件名></znx-文件名>` 的方式使用即可，详情请看/src/commonComponents目录*
+*内嵌有部分常用组件无需注册，以 `<w-fileName></w-fileName>` 的方式使用即可，详情请看/src/commonComponents目录*
 ## 作者联系方式
 QQ: 1317948850@qq.com
 WX: Lzl18530981390

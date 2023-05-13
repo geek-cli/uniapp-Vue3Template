@@ -16,7 +16,7 @@
 					<view class="cancel btn" :class="{all: !isShowConfirm}" v-if="isShowCancel" @click.stop="close">
 						{{cancel}}
 					</view>
-					<view class="confirm btn" :class="{all: !isShowCancel}" v-if="isShowConfirm" @click.stop="$emit('confirm')">
+					<view class="confirm btn" :class="{all: !isShowCancel}" v-if="isShowConfirm" @click.stop="confirmClick">
 						{{confirm}}
 					</view>
 				</view>
@@ -36,6 +36,7 @@
 	 * @property {Boolean} isMaskClose 是否可以点击遮罩层关闭(默认值: true)。
 	 * @property {Boolean} isShowCancel 是否显示取消按钮(默认值: true)。
 	 * @property {Boolean} isShowConfirm 是否显示确认按钮(默认值: true)。
+	 * @property {Boolean} isConfirmClose 是否在点击确认按钮后自动关闭(默认值: true)。
 	 * @event {Function()}  confirm 确认事件
 	 * @event {Function()}  cancel 取消事件
 	 * @example <commonBox title="交易提醒" content="请问您是否同意进行交易呢？" cancel="不同意" confirm="同意"></commonBox>
@@ -69,6 +70,9 @@
 		},
 		isShowConfirm: {
 			default: true
+		},
+		isConfirmClose: {
+			default: true
 		}
 	})
 	
@@ -79,12 +83,19 @@
 	// 打开
 	let open = ()=>{
 		popup.value.open();
-		emit('confirm')
 	}
 	// 关闭
 	let close = ()=>{
 		popup.value.close();
-		emit('cancel')
+		emit('cancel');
+	}
+	
+	// 点击确认按钮触发事件
+	let confirmClick = ()=>{
+		if(props.isConfirmClose) {
+			popup.value.close();
+		}
+		emit('confirm');
 	}
 	
 	// 导出方法

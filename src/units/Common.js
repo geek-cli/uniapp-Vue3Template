@@ -264,7 +264,7 @@ export default {
 					if (!result) {
 						return false;
 					}
-				} else if (!copy[key].value) {
+				} else if (!copy[key].value && copy[key].value !== 0) {
 					// 如果遇到未通过验证的值则返回false
 					this.commonToast(copy[key].err);
 					return false;

@@ -26,25 +26,25 @@
 		}
 	})
 
-	let newHtml = $ref('');
+	let newHtml = ref('');
 
 	// 初始化html
 	let initHtml = () => {
-		newHtml = props.html;
-		newHtml = handleImg();
-		newHtml = handleText();
+		newHtml.value = props.html;
+		newHtml.value = handleImg();
+		newHtml.value = handleText();
 	}
 
 	// 处理图片相关样式
 	let handleImg = () => {
 		// 替换商品详情文本
-		return newHtml.replace(/\<img/gi, '<img style="max-width: 100%; height: auto; display: block;"')
+		return newHtml.value.replace(/\<img/gi, '<img style="max-width: 100%; height: auto; display: block;"')
 	};
 	
 	// // 处理文本相关样式
 	let handleText = () => {
 		// 替换商品详情文本
-		return newHtml.replace(/\<p/gi, '<p style="line-height: 1.5"')
+		return newHtml.value.replace(/\<p/gi, '<p style="line-height: 1.5"')
 	};
 	
 	onMounted(()=>{

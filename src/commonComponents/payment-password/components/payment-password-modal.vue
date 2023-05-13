@@ -52,38 +52,38 @@
 	// emit
 	let emit = defineEmits(['change'])
 	
-	let animation = $ref(false);
-	let platform = $ref(systemInfo.platform);
+	let animation = ref(false);
+	let platform = ref(systemInfo.platform);
 	
 	// 方法
 	let moveHandle = ()=>{
 		return
 	}
 	let show = ()=>{
-		animation = true;
+		animation.value = true;
 		return true;
 	}
 	let hide = ()=>{
-		animation = false;
+		animation.value = false;
 		return false;
 	}
 	let toggle = ()=>{
-		return !animation ? show() : hide()
+		return !animation.value ? show() : hide()
 	}
 	
 	// 计算属性
-	let _mask = $computed(()=>{
+	let _mask = computed(()=>{
 		return String(props.mak) === 'false' ? false : true;
 	})
-	let _H5Top = $computed(()=>{
+	let _H5Top = computed(()=>{
 		return String(props.H5Top) === 'false' ? false : true;
 	})
-	let _H5Bottom = $computed(()=>{
+	let _H5Bottom = computed(()=>{
 		return String(props.H5Bottom) === 'false' ? false : true;
 	})
 	
 	// 监听
-	watch(()=>animation, (val) => {
+	watch(()=>animation.value, (val) => {
 		/* ... */
 		emit('change', val);
 	})

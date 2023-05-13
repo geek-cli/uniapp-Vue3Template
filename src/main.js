@@ -21,6 +21,6 @@ export function createApp() {
 		$pay: pay
 	})
 	return {
-		app,
+		app
 	};
 }

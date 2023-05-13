@@ -54,7 +54,7 @@
 	})
 
 	// 价格数组
-	let priceArr = $ref([]);
+	let priceArr = ref([]);
 
 	// 初始化
 	let init = () => {
@@ -70,13 +70,13 @@
 				itemArr[1] = itemArr[1] + ''.padStart(props.minRetainNum - itemArr[1].length, '0')
 			}
 
-			if (priceArr[index]) {
-				priceArr.splice(index, 1, {
+			if (priceArr.value[index]) {
+				priceArr.value.splice(index, 1, {
 					integer: itemArr[0],
 					decimal: itemArr[1]
 				})
 			} else {
-				priceArr.push({
+				priceArr.value.push({
 					integer: itemArr[0],
 					decimal: itemArr[1]
 				})

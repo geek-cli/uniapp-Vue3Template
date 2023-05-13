@@ -1,18 +1,16 @@
 {
-  "id": "geek-appUpdata",
-  "displayName": "app更新【支持热更新】【强制更新】【ios跳转更新】",
-  "version": "1.0.2",
-  "description": "app更新，支持热更新、强制更新、ios跳转更新",
+  "id": "geek-header",
+  "displayName": "自定义导航栏【小程序胶囊对其】【安全距离】",
+  "version": "1.0.3",
+  "description": "一款自定义导航栏，为您省去复杂的手机状态高度计算和小程序胶囊对不齐的问题。使用它，您无需再为多端适配而浪费精力。虽然性能不如原生导航栏，但它比原生更加灵活且功能更加强大。",
   "keywords": [
-    "app更新",
-    "热更新",
-    "强制更新",
-    "ios跳转更新",
-    "ios热更新"
+    "安全距离",
+    "沉浸式导航栏",
+    "自定义导航栏"
 ],
   "repository": "",
   "engines": {
-    "HBuilderX": "^3.4.2"
+    "HBuilderX": "^3.3.13"
   },
   "dcloudext": {
     "type": "component-vue",
@@ -48,7 +46,7 @@
           "vue3": "y"
         },
         "App": {
-          "app-vue": "n",
+          "app-vue": "y",
           "app-nvue": "n"
         },
         "H5-mobile": {
@@ -58,9 +56,9 @@
           "QQ浏览器(Android)": "y"
         },
         "H5-pc": {
-          "Chrome": "u",
+          "Chrome": "y",
           "IE": "y",
-          "Edge": "u",
+          "Edge": "y",
           "Firefox": "y",
           "Safari": "y"
         },

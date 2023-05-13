@@ -15,7 +15,7 @@
 	
 	let {
 		hotAppUpdata
-	} = $(appUpdata());
+	} = appUpdata();
 	
 	onLaunch((option) => {
 		console.log(option);
