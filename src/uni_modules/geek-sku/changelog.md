@@ -1,3 +1,14 @@
+## 1.4.7（2023-06-06）
+1. 修复sku数据频繁更改的情况下动态设置selectSkuIndex无法即时更新不及时的bug
+2. 增加无库存sku禁用(notStockDisabled)及无库存sku禁用样式属性(notStockDisabledStyle)
+3. 修改显示sku库存数量属性名称为showStockNum
+4. 更新说明文档
+## 1.4.6（2023-05-29）
+修复selectSkuIndex无法选中下标0的bug
+## 1.4.5（2023-05-15）
+规范部分代码
+## 1.4.4（2023-05-15）
+修复v2 小程序端来回切换可能会保留上次sku属性的bug
 ## 1.4.3（2023-05-06）
 修复vue2小程序中sku属性值不能带特殊字符的bug
 更新使用示例

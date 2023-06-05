@@ -1,6 +1,10 @@
 # geek-sku
 一款仿京东算法的轻量化、强大、拓展性强、可使用带图sku、可根据配置主题色自动生成相应的组件主题色的商品多规格sku，仅需要按照指定格式传入sku数组便可以直接使用。
 
+## 官网地址
+需要vue版本的geek-sku组件/捐赠作者/查看文档等可前往官网;
+[https://geek-sku.i996.me](https://geek-sku.i996.me/)
+
 ## 依赖包
 使用前需要安装这个包，用来生成加密的属性名称。
 `npm install crypto-js`
@@ -9,9 +13,9 @@
 从插件时长直接使用HBuilderX 导入插件复制下方的示例即可直接快速使用，然后再根据业务需求进行调整即可。
 
 ### v3示例
-```html
+```vue
 <template>
-    <view class="test">
+    <view class="test" style="padding: 3rem 1.5rem;">
         <geek-sku
         	v-model="skuShow"
         	:data="skus"
@@ -95,18 +99,12 @@
         console.log(e);
     }
 </script>
-
-<style lang="less" scoped>
-    .test {
-        padding: 3rem 1.5rem;
-    }
-</style>
 ```
 
 ### v2示例
-```html
+```vue
 <template>
-	<view class="test">
+	<view class="test" style="padding: 3rem 1.5rem;">
 		<geek-sku
 			v-model="skuShow"
 			:data="skus"
@@ -196,11 +194,6 @@
 		}
 	}
 </script>
-<style lang="less" scoped>
-    .test {
-        padding: 3rem 1.5rem;
-    }
-</style>
 ```
 
 
@@ -300,10 +293,10 @@
 ]
 ```
 
-
-## 默认选中指定sku
+## 指定默认选中sku
+`selectSkuIndex`用来指定要选中的sku下标
+### 示例
 ``` html
-<!-- selectSkuIndex 传入要选中的sku下标即可 -->
 <geek-sku
 	v-model="skuShow"
 	:data="skus"
@@ -317,10 +310,33 @@
 	@confirm="skuConfirm"
 ></geek-sku>
 ```
+## 无库存sku
+无库存sku的默认是可以选中并展示信息的，但如果要无法选中的话请看下方。
+### notStockDisabled
+`notStockDisabled`用来指定无库存sku是否不能被选中的，默认为false，也就是默认可以被选中。
+### notStockDisabledStyle
+`notStockDisabledStyle`用来指定无库存sku不可使用时的样式，格式是{}。
+### 示例
+``` html
+<geek-sku
+	v-model="skuShow"
+	:data="skus"
+	defaultTitle="iPhone14 Pro MAX"
+	defaultCover="http://rn8zfvrr0.hn-bkt.clouddn.com/e40744e32a2930f945e67da79a35f270.jpg?e=1672666137&token=0qmhoqQQZ4ggfGZOevcNXE4wYe_IZD3Y5xm8ZZ5Y:bxn-lcJPnFNY22kGWwh5MRgdGwM="
+	btnConfirmText="购买"
+	notStockDisabled
+	notSelectSku="请选择完整的商品信息"
+	:isShowStock="false"
+	:selectSkuIndex="3"
+	@skuChange="skuChange"
+	@confirm="skuConfirm"
+></geek-sku>
+```
+
 ## API
 
 ### Props
-| 参数 | 说明 | 类型 | 默认值 | 可选值 |
+| 属性名 | 说明 | 类型 | 默认值 | 可选值 |
 | --- | --- | -- | -- | -- |
 | data | 源数据(sku列表) | Array | [] | - |
 | value/modelValue | 是否显示sku组件 | Boolean | false | true |
@@ -331,9 +347,11 @@
 | defaultNum | 默认购买商品数量 | Number | 1 | - |
 | themeColor | 主题色，需要传入一个数组长度为3的数组，分别对应rgb三个颜色的值，例如: [84, 164, 255] | Array | [84, 164, 255] | - |
 | btnConfirmText | 确认按钮文字 | String | '确认' | - |
-| notStockText | 库存不足文字 | String | '库存不足' | - |
+| notStockDisabled | 无库存sku是否禁用 | Boolean | false | true |
+| notStockDisabledStyle | 无库存sku禁用样式，notStockDisabled为true时生效 | Object | {} | - |
+| notStockText | 库存不足文字，notStockDisabled为false时生效 | String | '库存不足' | - |
 | notSelectSku | 未选择完整的sku时的文字提示 | String | '请选择完整的sku属性' | - |
-| isShowStock | 是否展示库存 | Boolean | true | false |
+| showStockNum | 是否展示库存数量 | Boolean | true | false |
 
 ### Events
 | 事件名 | 说明 | 回调参数 |
