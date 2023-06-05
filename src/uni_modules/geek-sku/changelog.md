@@ -1,3 +1,10 @@
+## 1.4.9（2023-06-06）
+1. 修复sku数据频繁更改的情况下动态设置selectSkuIndex无法即时更新不及时的bug
+2. 增加无库存sku禁用(notStockDisabled)及无库存sku禁用样式属性(notStockDisabledStyle)
+3. 修改显示sku库存数量属性名称为showStockNum
+4. 更新说明文档
+## 1.4.8（2023-06-06）
+1. 更新说明文档
 ## 1.4.7（2023-06-06）
 1. 修复sku数据频繁更改的情况下动态设置selectSkuIndex无法即时更新不及时的bug
 2. 增加无库存sku禁用(notStockDisabled)及无库存sku禁用样式属性(notStockDisabledStyle)

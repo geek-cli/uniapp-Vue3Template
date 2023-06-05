@@ -2,8 +2,13 @@
 一款仿京东算法的轻量化、强大、拓展性强、可使用带图sku、可根据配置主题色自动生成相应的组件主题色的商品多规格sku，仅需要按照指定格式传入sku数组便可以直接使用。
 
 ## 官网地址
-需要vue版本的geek-sku组件/捐赠作者/查看文档等可前往官网;
-[https://geek-sku.i996.me](https://geek-sku.i996.me/)
+需要vue版本的geek-sku组件/捐赠作者/查看文档等可点击下方链接;
+
+[官网](https://geek-sku.i996.me/)
+
+需要交流反馈可点击下方链接
+
+[交流反馈](https://geek-sku.i996.me/guide?type=%E4%BA%A4%E6%B5%81%E5%8F%8D%E9%A6%88)
 
 ## 依赖包
 使用前需要安装这个包，用来生成加密的属性名称。
@@ -325,6 +330,7 @@
 	defaultCover="http://rn8zfvrr0.hn-bkt.clouddn.com/e40744e32a2930f945e67da79a35f270.jpg?e=1672666137&token=0qmhoqQQZ4ggfGZOevcNXE4wYe_IZD3Y5xm8ZZ5Y:bxn-lcJPnFNY22kGWwh5MRgdGwM="
 	btnConfirmText="购买"
 	notStockDisabled
+	:notStockDisabledStyle="{}"
 	notSelectSku="请选择完整的商品信息"
 	:isShowStock="false"
 	:selectSkuIndex="3"
